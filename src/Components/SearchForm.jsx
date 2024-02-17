@@ -2,7 +2,7 @@ import SearchFormTab from "./SearchFormTab";
 
 const SearchForm = () => {
   return (
-    <div className="left-[30%] absolute top-[40%]">
+    <div className="left-[20%] absolute top-[40%]">
       <SearchFormTab />
     </div>
   );

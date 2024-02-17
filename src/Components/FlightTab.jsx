@@ -1,22 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdSwapHoriz } from "react-icons/md";
+import DatePicker from "./DatePicker";
 import InputModal from "./InputModal";
 import ToInputModal from "./ToInputModal";
-import DatePicker from "./DatePicker";
+// import { getAllAirports } from "../Actions/airport"
+import DropDown from "./DropDown";
 const FlightTab = () => {
   const [activeTab, setActiveTab] = useState("roundTrip"); // Set default active tab
-
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
   };
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
-
   const handleSwap = () => {
     const temp = input1;
     setInput1(input2);
     setInput2(temp);
   };
+ 
+
   return (
     <div>
       <div role="tablist" className="tabs ">
@@ -32,28 +34,31 @@ const FlightTab = () => {
           aria-label="One-way"
           onClick={() => handleTabChange("oneWay")}
         />
-        <div role="tabpanel" className="tab-content p-5">
+        <div role="tabpanel" className="tab-content w-[105vh]  p-5">
           <div className="flex justify-start gap-4 items-center">
-            <InputModal />
+            <div className="w-full relative mr-2">
+              <InputModal
+                inputValue={input1}
+              
+                setInputValue={setInput1}
+              />
+            </div>
             <button
               onClick={handleSwap}
-              className="z-10 absolute transform translate-x-48 overflow-auto"
+              className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
             >
-              <label className="btn   btn-circle  swap swap-rotate">
-                {/* this hidden checkbox controls the state */}
-                <input type="checkbox" />
+              <MdSwapHoriz className="text-lg  btn btn-circle   " />{" "}
+              {/* Swap icon */}
+            </button>
 
-                {/* hamburger icon */}
-                <MdSwapHoriz className="text-xl swap-off" />
-
-                {/* close icon */}
-                <MdSwapHoriz className="text-xl swap-on" />
-              </label>
-            </button>{" "}
             {/* Arrow button */}
-            <ToInputModal />
-      <DatePicker />
-
+            <div className="w-full relative">
+              {" "}
+              <ToInputModal inputValue={input2} setInputValue={setInput2} />
+            </div>
+            <div className="w-full">
+              <DatePicker />
+            </div>
           </div>
         </div>
 
@@ -89,6 +94,9 @@ const FlightTab = () => {
         <div role="tabpanel" className="tab-content p-5">
           Multi-city
         </div>
+      </div>
+      <div>
+        <DropDown />
       </div>
     </div>
   );
