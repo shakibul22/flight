@@ -4,19 +4,20 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { MdPeople } from "react-icons/md";
+import { IoWomanOutline, IoMan } from "react-icons/io5";
+import { FaBaby } from "react-icons/fa";
 
 export default function GuestRoom() {
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [roomLabel, setRoomLabel] = useState("Rooms"); // State to track the room label
+  const [roomLabel, setRoomLabel] = useState("Rooms");
 
   const handleIncrement = (index, type) => {
     setRooms((prevRooms) => {
       const updatedRooms = [...prevRooms];
       updatedRooms[index] = {
         ...updatedRooms[index],
-        [type]: updatedRooms[index][type] + 1,
+        [type]: Math.min(updatedRooms[index][type] + 1, 9),
       };
       return updatedRooms;
     });
@@ -46,17 +47,17 @@ export default function GuestRoom() {
   };
 
   const handleApplyClick = () => {
-    const totalRooms = rooms.length; // Calculate total rooms
-    setRoomLabel(`Rooms (${totalRooms})`); // Update the room label
-    setIsModalOpen(false); // Close the modal
+    const totalRooms = rooms.length;
+    setRoomLabel(`Rooms (${totalRooms})`);
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="flex flex-row justify-evenly gap-5">
+    <div>
+      <Button onClick={() => setIsModalOpen(true)}></Button>
       <FormControl sx={{ m: 1, minWidth: 180 }}>
         <InputLabel id="room-label">{roomLabel}</InputLabel>
         <Select
-          className="flex flex-row justify-between gap-4"
           labelId="room-label"
           id="room-select"
           autoWidth
@@ -68,37 +69,57 @@ export default function GuestRoom() {
             <MenuItem key={index}>
               <div className="flex justify-between gap-9">
                 <div className="flex gap-2 justify-between items-center">
-                  <MdPeople className="text-2xl" />
-                  <div className="flex flex-col ">Room {index + 1}</div>
+                  <IoMan className="text-2xl" />
+                  <div className="flex flex-col">
+                    <div>Room {index + 1}</div>
+                    <div>Adults</div>
+                  </div>
                 </div>
                 <div className="flex items-center">
                   <button
                     onClick={() => handleDecrement(index, "adults")}
                     disabled={room.adults === 1}
-                    className={`px-2 rounded-l`}
+                    className={`px-2 rounded-l ${
+                      room.adults === 1 ? "opacity-50" : ""
+                    }`}
                   >
                     -
                   </button>
                   <span className="px-4">{room.adults}</span>
                   <button
                     onClick={() => handleIncrement(index, "adults")}
-                    className={`px-2 rounded-r`}
+                    disabled={room.adults === 9}
+                    className={`px-2 rounded-r ${
+                      room.adults === 9 ? "opacity-50" : ""
+                    }`}
                   >
                     +
                   </button>
+                </div>
+                <div className="flex gap-2 justify-between items-center">
+                  <IoWomanOutline className="text-2xl" />
+                  <div className="flex flex-col">
+                    <div>Children</div>
+                    <div>2-12</div>
+                  </div>
                 </div>
                 <div className="flex items-center">
                   <button
                     onClick={() => handleDecrement(index, "children")}
                     disabled={room.children === 0}
-                    className={`px-2 rounded-l`}
+                    className={`px-2 rounded-l ${
+                      room.children === 0 ? "opacity-50" : ""
+                    }`}
                   >
                     -
                   </button>
                   <span className="px-4">{room.children}</span>
                   <button
                     onClick={() => handleIncrement(index, "children")}
-                    className={`px-2 rounded-r`}
+                    disabled={room.children === 9}
+                    className={`px-2 rounded-r ${
+                      room.children === 9 ? "opacity-50" : ""
+                    }`}
                   >
                     +
                   </button>
