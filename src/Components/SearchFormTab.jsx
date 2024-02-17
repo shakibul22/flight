@@ -77,12 +77,18 @@ const SearchFormTab = () => {
               </div>
             </div>
 
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-between items-center mt-6">
               <div className="flex gap-3">
                 <input type="checkbox" name="free" id="" />
                 <span>Free Collection</span>
               </div>
               <button className="btn btn-success text-white">Search</button>
+            </div>
+            <div className="absolute bottom-0 py-2 bg-gray-300 w-full rounded-md transform -translate-x-7 px-6">
+              <h2>
+                Compare Wego vs these sites:{" "}
+                <input type="checkbox" name="" id="" /> Booking.com
+              </h2>
             </div>
           </div>
         </div>
