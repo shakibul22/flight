@@ -71,7 +71,7 @@ const FlightTab = () => {
           defaultChecked
           onClick={() => handleTabChange("roundTrip")}
         />
-        <div role="tabpanel" className="tab-content p-5 ">
+        <div role="tabpanel" className="tab-content  w-[105vh]  p-5 ">
           <div className="flex justify-start gap-4 items-center">
             <div className="w-full relative mr-2">
               <InputModal inputValue={input1} setInputValue={setInput1} />

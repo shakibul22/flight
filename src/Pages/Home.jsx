@@ -1,6 +1,5 @@
 import Banner from "../Components/Banner";
-import DatePicker from "../Components/DatePicker";
-import DestinationInput from "../Components/DestinationInput";
+
 import SearchForm from "../Components/SearchForm";
 
 const Home = () => {
@@ -8,7 +7,6 @@ const Home = () => {
     <div>
       <Banner />
       <SearchForm />
-      <DestinationInput />
     </div>
   );
 };

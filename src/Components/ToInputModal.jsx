@@ -43,10 +43,10 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
     setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
   };
 
-  const handleBlur = () => {
-    setModal(false);
-    setShowCloseIcon(false); // Hide close icon when input loses focus
-  };
+  // const handleBlur = () => {
+  //   setModal(false);
+  //   setShowCloseIcon(false); // Hide close icon when input loses focus
+  // };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -86,7 +86,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            onBlur={handleBlur}
+            // onBlur={handleBlur}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
           {showCloseIcon && (

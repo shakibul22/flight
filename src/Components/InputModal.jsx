@@ -43,10 +43,10 @@ const InputModal = ({ inputValue, setInputValue }) => {
     setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
   };
 
-  const handleBlur = () => {
-    setModal(false);
-    setShowCloseIcon(false); // Hide close icon when input loses focus
-  };
+  // const handleBlur = () => {
+  //   setModal(false);
+  //   setShowCloseIcon(false); // Hide close icon when input loses focus
+  // };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -62,9 +62,14 @@ const InputModal = ({ inputValue, setInputValue }) => {
   };
 
   const handleSelectAirport = (selectedAirport) => {
-    setInputValue('')
-    setInputValue(selectedAirport.airport_name); // Set the selected airport as the input value
-    setFilteredAirports([]); // Clear the filtered airports
+    
+    if (selectedAirport) {
+      setInputValue(selectedAirport.airport_name);
+      setFilteredAirports([]); // Clear filtered airports
+      setModal(false)
+    } else {
+      setInputValue(""); // Clear input value
+    }
   };
 
   return (
@@ -86,7 +91,8 @@ const InputModal = ({ inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            onBlur={handleBlur}
+            // onBlur={handleBlur}
+            
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
           {showCloseIcon && (
@@ -104,22 +110,26 @@ const InputModal = ({ inputValue, setInputValue }) => {
           <div>
             <div>
               {/* Render filtered airports */}
-              {filteredAirports.map((airport) => (
-                <p
-                  key={airport.code}
-                  onClick={() => handleSelectAirport(airport)}
-                  className="cursor-pointer grid  grid-cols-2 items-center justify-between gap-5"
-                >
-                  <div className="border-b-2">
-                    <span className="flex flex-row  items-center gap-2">
-                      <MdLocalAirport /> {airport.airport_name} -
-                      {airport.country_name}{" "}
-                    </span>
-                    <span>{airport.code}</span>
+              <div>
+                {filteredAirports.map((airport) => (
+                  <div
+                    key={airport.code}
+                    onClick={() => handleSelectAirport(airport)}
+                    className="cursor-pointer grid  grid-cols-2 items-center justify-between gap-5"
+                  >
+                    <div className="border-b-2">
+                      <span className="flex flex-row  items-center gap-2">
+                        <MdLocalAirport /> {airport.airport_name} -
+                        {airport.country_name}{" "}
+                      </span>
+                      <span>{airport.code}</span>
+                    </div>
                   </div>
-                </p>
-              ))}
+                ))}
+              </div>
             </div>
+
+            {/* Show popular cities if filteredAirports is empty */}
             {filteredAirports.length === 0 && (
               <div>
                 <h3>Popular Cities</h3>
