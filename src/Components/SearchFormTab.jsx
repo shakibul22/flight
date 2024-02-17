@@ -4,6 +4,8 @@ import { useState } from "react";
 import DatePicker from "./DatePicker";
 import InputModal from "./InputModal";
 import DropDown from "./DropDown";
+import DestinationInput from "./DestinationInput";
+import GuestRoom from "./GuestRoom";
 
 const SearchFormTab = () => {
   const [activeTab, setActiveTab] = useState("flights");
@@ -59,15 +61,19 @@ const SearchFormTab = () => {
         />
         <div
           role="tabpanel"
-          className="tab-content bg-white border-base-300 mt-3 h-[35vh] rounded-box p-6"
+          className="tab-content bg-white border-base-300  h-[30vh] rounded-box p-6"
         >
-          <span className="flex flex-row items-center">
-            <div className="w-full relative mr-2">
-              <InputModal inputValue={input1} setInputValue={setInput1} />
+          <div className="w-[105vh]">
+            <h2 className="font-medium mb-4">Where do you want to Stay?</h2>
+            <div className="flex flex-row items-center">
+              <div className="w-full relative mr-2 ">
+                <InputModal inputValue={input1} setInputValue={setInput1} />
+              </div>
+              <DatePicker />
+              <GuestRoom />
             </div>
-            <DatePicker />
-          </span>
-          <DropDown />
+            <DropDown />
+          </div>
         </div>
         {/* Third Tab */}
         <a
