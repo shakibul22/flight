@@ -43,7 +43,7 @@ const FlightTab = () => {
               onClick={handleSwap}
               className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
             >
-              <MdSwapHoriz className="text-lg  btn btn-circle   " />{" "}
+              <MdSwapHoriz className="text-  btn btn-circle   " />{" "}
               {/* Swap icon */}
             </button>
 

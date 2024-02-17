@@ -105,7 +105,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
           />
           {showCloseIcon && (
             <MdClose
-              className="transform translate-x-48 z-50 btn btn-circle btn-sm overflow-hidden absolute cursor-pointer"
+              className="transform translate-x-48 z-50  text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}
