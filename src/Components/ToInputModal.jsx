@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MdClose, MdLocalAirport } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 
@@ -7,6 +7,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     // Fetch airport data when the component mounts
@@ -33,6 +34,19 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
       setFilteredAirports([]);
     }
   }, [inputValue, airport]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setModal(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleClearInput = () => {
     setInputValue(""); // Clear the input by setting it to an empty string
@@ -71,10 +85,10 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
   return (
     <div
       className={`duration-200 absolute -mt-6 ${
-        modal ? "w-[450px] z-30 bg-white border" : ""
+        modal ? "w-[350px] z-30 bg-white border" : ""
       }`}
     >
-      <div className={`${modal ? "w-full z-[50]" : "static"}`}>
+      <div className={`${modal ? "w-full z-[50]" : "static"}`} ref={modalRef}>
         <div className="flex justify-between items-center relative">
           <input
             type="text"
@@ -82,7 +96,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
             className={`border-2 h-14 p-4 pl-8 duration-200 ${
               modal
                 ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
-                : "w-[27wh] z-0"
+                : "w-[25wh] z-0"
             }`}
             value={inputValue}
             onChange={handleChange}
@@ -91,7 +105,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
           />
           {showCloseIcon && (
             <MdClose
-              className="transform translate-x-48 z-50 overflow-hidden absolute cursor-pointer"
+              className="transform translate-x-48 z-50 btn btn-circle btn-sm overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}
@@ -102,36 +116,41 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
           }`}
         >
           <div>
-            <div className="w-full">
-              {/* Render filtered airports */}
-              {filteredAirports.map((airport) => (
-                <p
+            <div>
+              {filteredAirports.slice(0, 10).map((airport) => (
+                <div
                   key={airport.code}
                   onClick={() => handleSelectAirport(airport)}
-                  className="cursor-pointer grid  grid-cols-2 items-center justify-between gap-5"
+                  className="cursor-pointer grid  grid-cols-2 items-center w-[55vh] justify-between gap-5"
                 >
-                  <div className="border-b-2 flex flex-row justify-between">
+                  <div className="border-b-2 flex flex-row justify-between ">
                     <span className="flex flex-row  items-center gap-2">
                       <MdLocalAirport /> {airport.airport_name} -
                       {airport.country_name}{" "}
                     </span>
                     <span>{airport.code}</span>
                   </div>
-                </p>
+                </div>
               ))}
             </div>
             {/* Show popular cities if filteredAirports is empty */}
             {filteredAirports.length === 0 && (
               <div>
-                <h3>Popular Cities</h3>
-                <div className="flex flex-row flex-wrap justify-evenly gap-3">
+                <h3 className="font-medium">Popular Cities</h3>
+                <div className="grid grid-cols-2 lg:grid-cols-3 justify-evenly gap-3">
                   {/* Sample popular cities */}
                   <p onClick={() => handleSelectPopularCity("Dubai")}>Dubai</p>
-                  <p onClick={() => handleSelectPopularCity("New York")}>New York</p>
-                  <p onClick={() => handleSelectPopularCity("London")}>London</p>
+                  <p onClick={() => handleSelectPopularCity("New York")}>
+                    New York
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("London")}>
+                    London
+                  </p>
                   <p onClick={() => handleSelectPopularCity("Paris")}>Paris</p>
                   <p onClick={() => handleSelectPopularCity("Tokyo")}>Tokyo</p>
-                  <p onClick={() => handleSelectPopularCity("Singapore")}>Singapore</p>
+                  <p onClick={() => handleSelectPopularCity("Singapore")}>
+                    Singapore
+                  </p>
                 </div>
               </div>
             )}
