@@ -93,7 +93,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
           <input
             type="text"
             placeholder="To"
-            className={`border-2 h-14 p-4 pl-8 duration-200 ${
+            className={`border-2 h-14 p-4 pl-8 w-[170px] lg:w-full duration-200 ${
               modal
                 ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
                 : "w-[25wh] z-0"

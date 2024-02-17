@@ -9,3 +9,6 @@
 .zoomed input {
   transform: scale(1.1); /* Adjust the scale factor as needed */
 }
+.no-bottom-border .MuiOutlinedInput-notchedOutline {
+  border-bottom: none; /* Remove bottom border */
+}

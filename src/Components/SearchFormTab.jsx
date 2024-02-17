@@ -61,13 +61,13 @@ const SearchFormTab = () => {
         />
         <div
           role="tabpanel"
-          className="tab-content bg-white border-base-300  h-[30vh] rounded-box p-6"
+          className="tab-content bg-white border-base-300  h-[35vh] rounded-box p-6"
         >
           <div className="w-[105vh]">
-            <h2 className="font-medium mb-4">Where do you want to Stay?</h2>
-            <div className="flex flex-row items-center">
+            <h2 className="font-medium mb-2">Where do you want to Stay?</h2>
+            <div className="flex flex-row items-center w-full">
               <div className="w-full relative mr-2 ">
-                <InputModal inputValue={input1} setInputValue={setInput1} />
+                <DestinationInput />
               </div>
               <div className="w-full">
                 <DatePicker />

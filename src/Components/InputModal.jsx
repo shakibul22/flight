@@ -88,7 +88,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   return (
     <div
-      className={`duration-200 absolute -mt-6 ${
+      className={`duration-200 absolute -mt-6  ${
         modal ? "w-[350px] z-30 bg-white border" : ""
       }`}
     >
@@ -97,7 +97,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
           <input
             type="text"
             placeholder="From"
-            className={`border-2 h-14 p-4 pl-8 duration-200 ${
+            className={`border-2 h-14 p-4 pl-8 w-[200px] lg:w-full duration-200 ${
               modal
                 ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
                 : "w-[27wh] z-0"
@@ -109,7 +109,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
           />
           {showCloseIcon && (
             <MdClose
-              className="transform translate-x-48 z-50  text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
+              className="transform translate-x-32 lg:translate-x-48 z-50  text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}

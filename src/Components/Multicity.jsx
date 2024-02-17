@@ -4,6 +4,7 @@ import ToInputModal from "./ToInputModal"; // Assuming ToInputModal is a compone
 import DatePicker from "./DatePicker"; // Assuming DatePicker is a component defined elsewhere
 import { MdSwapHoriz } from "react-icons/md"; // Assuming MdSwapHoriz is imported from react-icons library
 import Deparature from "./Deparature";
+import { MdOutlineSwapHorizontalCircle } from "react-icons/md";
 
 const Multicity = () => {
   const [cities, setCities] = useState([
@@ -39,7 +40,7 @@ const Multicity = () => {
     <div className=" w-[90vh]">
       {cities.map((city, index) => (
         <div
-          className="multicity flex justify-start gap-4 items-center"
+          className="multicity flex justify-start gap-2 items-center"
           key={index}
         >
           <div className="w-full relative mr-2">
@@ -52,9 +53,15 @@ const Multicity = () => {
           </div>
           <button
             onClick={() => handleSwap(index)}
-            className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
+            className={`z-10 absolute transform  translate-x-[140px] 2xl:translate-x-56  overflow-auto rounded-full border-white border-4 ${
+              city.input1 && city.input2
+                ? "text-green-400"
+                : "text-gray-200 bg-gray-400"
+            }`}
+            disabled={!city.input1 || !city.input2}
           >
-            <MdSwapHoriz className="text-lg btn btn-circle" /> {/* Swap icon */}
+            <MdOutlineSwapHorizontalCircle className="text-lg btn-circle  " />{" "}
+            {/* Swap icon */}
           </button>
           {/* Arrow button */}
           <div className="w-full relative">
@@ -69,8 +76,12 @@ const Multicity = () => {
             <Deparature />
           </div>
           {cities.length > 2 && (
-            <button type="button" onClick={() => removeFlight(index)}>
-              Remove
+            <button
+              type="button"
+              className="btn btn-circle"
+              onClick={() => removeFlight(index)}
+            >
+              X
             </button>
           )}
         </div>

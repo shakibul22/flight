@@ -41,7 +41,7 @@ const FlightTab = () => {
             </div>
             <button
               onClick={handleSwap}
-              className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
+              className="z-10 absolute transform  translate-x-[155px] 2xl:translate-x-56 overflow-auto rounded-full border-white border-4"
             >
               <MdSwapHoriz className="text-  btn btn-circle   " />{" "}
               {/* Swap icon */}
@@ -72,14 +72,13 @@ const FlightTab = () => {
           onClick={() => handleTabChange("roundTrip")}
         />
         <div role="tabpanel" className="tab-content  w-[105vh]  p-5 ">
-
           <div className="flex justify-start gap-4 items-center">
             <div className="w-full relative mr-2">
               <InputModal inputValue={input1} setInputValue={setInput1} />
             </div>
             <button
               onClick={handleSwap}
-              className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
+              className="z-10 absolute transform  translate-x-[155px] 2xl:translate-x-56 overflow-auto rounded-full border-white border-4"
             >
               <MdSwapHoriz className="text-lg  btn btn-circle   " />{" "}
               {/* Swap icon */}

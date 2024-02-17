@@ -4,8 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { MdPeople } from "react-icons/md";
-
+import { IoWomanOutline } from "react-icons/io5";
+import { IoMan } from "react-icons/io5";
+import { FaBaby } from "react-icons/fa6";
 export default function DropDown() {
   const [selectedPaymentTypes, setSelectedPaymentTypes] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -76,12 +77,13 @@ export default function DropDown() {
               id="Passengers-select"
               autoWidth
               label={passengerLabel}
+              variant="standard"
             >
               {/* Adult MenuItem */}
               <MenuItem>
                 <div className="flex justify-between gap-9">
                   <div className="flex gap-2 justify-between  items-center">
-                    <MdPeople className="text-2xl" />
+                    <IoMan className="text-2xl" />
                     <div className="flex flex-col ">
                       Adults
                       <span> &gt;12</span>
@@ -89,7 +91,10 @@ export default function DropDown() {
                   </div>
                   <div className="flex items-center">
                     <button
-                      onClick={() => handleDecrement("adult")}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the event from bubbling up and closing the menu
+                        handleDecrement("adult");
+                      }}
                       disabled={passengerCounts.adult === 0}
                       className={`px-2 ${
                         isGreen
@@ -99,9 +104,13 @@ export default function DropDown() {
                     >
                       -
                     </button>
+
                     <span className="px-4">{passengerCounts.adult}</span>
                     <button
-                      onClick={() => handleIncrement("adult")}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the event from bubbling up and closing the menu
+                        handleIncrement("adult");
+                      }}
                       disabled={passengerCounts.adult === 9 || !isGreen}
                       className={`px-2 ${
                         isGreen
@@ -118,7 +127,7 @@ export default function DropDown() {
               <MenuItem>
                 <div className="flex justify-between gap-9">
                   <div className="flex gap-2 justify-between  items-center">
-                    <MdPeople className="text-2xl" />
+                    <IoWomanOutline className="text-2xl" />
                     <div className="flex flex-col ">
                       Children
                       <span> 2-12</span>
@@ -126,7 +135,10 @@ export default function DropDown() {
                   </div>
                   <div className="flex items-center">
                     <button
-                      onClick={() => handleDecrement("children")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDecrement("children");
+                      }}
                       disabled={passengerCounts.children === 0}
                       className={`px-2 ${
                         isGreen
@@ -136,9 +148,13 @@ export default function DropDown() {
                     >
                       -
                     </button>
+
                     <span className="px-4">{passengerCounts.children}</span>
                     <button
-                      onClick={() => handleIncrement("children")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleIncrement("children");
+                      }}
                       disabled={passengerCounts.children === 9 || !isGreen}
                       className={`px-2 ${
                         isGreen
@@ -155,7 +171,7 @@ export default function DropDown() {
               <MenuItem>
                 <div className="flex justify-between gap-9">
                   <div className="flex gap-2 justify-between  items-center">
-                    <MdPeople className="text-2xl" />
+                    <FaBaby className="text-2xl" />
                     <div className="flex flex-col ">
                       Infants
                       <span> &lt;2</span>
@@ -163,7 +179,10 @@ export default function DropDown() {
                   </div>
                   <div className="flex items-center">
                     <button
-                      onClick={() => handleDecrement("infant")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDecrement("infant");
+                      }}
                       disabled={passengerCounts.infant === 0}
                       className={`px-2 ${
                         isGreen
@@ -173,9 +192,13 @@ export default function DropDown() {
                     >
                       -
                     </button>
+
                     <span className="px-4">{passengerCounts.infant}</span>
                     <button
-                      onClick={() => handleIncrement("infant")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleIncrement("infant");
+                      }}
                       disabled={passengerCounts.infant === 9 || !isGreen}
                       className={`px-2 ${
                         isGreen
@@ -199,6 +222,7 @@ export default function DropDown() {
             </Select>
           </FormControl>
         </div>
+
         {/* Travel Class */}
         <div>
           <FormControl sx={{ m: 1, minWidth: 180 }}>
@@ -208,6 +232,7 @@ export default function DropDown() {
               id="travel-class-select"
               autoWidth
               label="Travel Class"
+              variant="standard"
             >
               <MenuItem value={10}>Premium Economy</MenuItem>
               <MenuItem value={21}>Business Class</MenuItem>
@@ -223,6 +248,7 @@ export default function DropDown() {
               labelId="payment-type-label"
               id="payment-type-select"
               multiple
+              variant="standard"
               open={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}
               onOpen={() => setIsMenuOpen(true)}
