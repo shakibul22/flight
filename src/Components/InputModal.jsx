@@ -43,11 +43,6 @@ const InputModal = ({ inputValue, setInputValue }) => {
     setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
   };
 
-  // const handleBlur = () => {
-  //   setModal(false);
-  //   setShowCloseIcon(false); // Hide close icon when input loses focus
-  // };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
@@ -62,14 +57,19 @@ const InputModal = ({ inputValue, setInputValue }) => {
   };
 
   const handleSelectAirport = (selectedAirport) => {
-    
     if (selectedAirport) {
       setInputValue(selectedAirport.airport_name);
+      setModal(false);
       setFilteredAirports([]); // Clear filtered airports
-      setModal(false)
     } else {
       setInputValue(""); // Clear input value
     }
+  };
+
+  const handleSelectPopularCity = (city) => {
+    setInputValue(city);
+    setModal(false);
+    setFilteredAirports([]);
   };
 
   return (
@@ -91,8 +91,6 @@ const InputModal = ({ inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            // onBlur={handleBlur}
-            
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
           {showCloseIcon && (
@@ -108,25 +106,23 @@ const InputModal = ({ inputValue, setInputValue }) => {
           }`}
         >
           <div>
+            {/* Render filtered airports */}
             <div>
-              {/* Render filtered airports */}
-              <div>
-                {filteredAirports.map((airport) => (
-                  <div
-                    key={airport.code}
-                    onClick={() => handleSelectAirport(airport)}
-                    className="cursor-pointer grid  grid-cols-2 items-center justify-between gap-5"
-                  >
-                    <div className="border-b-2">
-                      <span className="flex flex-row  items-center gap-2">
-                        <MdLocalAirport /> {airport.airport_name} -
-                        {airport.country_name}{" "}
-                      </span>
-                      <span>{airport.code}</span>
-                    </div>
+              {filteredAirports.map((airport) => (
+                <div
+                  key={airport.code}
+                  onClick={() => handleSelectAirport(airport)}
+                  className="cursor-pointer grid  grid-cols-2 items-center w-[55vh] justify-between gap-5"
+                >
+                  <div className="border-b-2 flex flex-row justify-between ">
+                    <span className="flex flex-row  items-center gap-2">
+                      <MdLocalAirport /> {airport.airport_name} -
+                      {airport.country_name}{" "}
+                    </span>
+                    <span>{airport.code}</span>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
             {/* Show popular cities if filteredAirports is empty */}
@@ -135,12 +131,20 @@ const InputModal = ({ inputValue, setInputValue }) => {
                 <h3>Popular Cities</h3>
                 <div className="flex flex-row flex-wrap justify-evenly gap-3">
                   {/* Sample popular cities */}
-                  <p>Dubai</p>
-                  <p>New York</p>
-                  <p>London</p>
-                  <p>Paris</p>
-                  <p>Tokyo</p>
-                  <p>Singapore</p>
+                  <p onClick={() => handleSelectPopularCity("Bangladesh")}>
+                    Dubai
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Sylhet")}>
+                    New York
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("India")}>London</p>
+                  <p onClick={() => handleSelectPopularCity("Srilanka")}>
+                    Paris
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Tokyo")}>Tokyo</p>
+                  <p onClick={() => handleSelectPopularCity("Singapore")}>
+                    Singapore
+                  </p>
                 </div>
               </div>
             )}

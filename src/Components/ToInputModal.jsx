@@ -43,11 +43,6 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
     setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
   };
 
-  // const handleBlur = () => {
-  //   setModal(false);
-  //   setShowCloseIcon(false); // Hide close icon when input loses focus
-  // };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
@@ -63,6 +58,12 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
 
   const handleSelectAirport = (selectedAirport) => {
     setInputValue(selectedAirport.airport_name);
+    setModal(false);
+    setFilteredAirports([]);
+  };
+
+  const handleSelectPopularCity = (cityName) => {
+    setInputValue(cityName);
     setModal(false);
     setFilteredAirports([]);
   };
@@ -86,7 +87,6 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            // onBlur={handleBlur}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
           {showCloseIcon && (
@@ -110,7 +110,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                   onClick={() => handleSelectAirport(airport)}
                   className="cursor-pointer grid  grid-cols-2 items-center justify-between gap-5"
                 >
-                  <div className="border-b-2">
+                  <div className="border-b-2 flex flex-row justify-between">
                     <span className="flex flex-row  items-center gap-2">
                       <MdLocalAirport /> {airport.airport_name} -
                       {airport.country_name}{" "}
@@ -120,17 +120,18 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                 </p>
               ))}
             </div>
+            {/* Show popular cities if filteredAirports is empty */}
             {filteredAirports.length === 0 && (
               <div>
                 <h3>Popular Cities</h3>
                 <div className="flex flex-row flex-wrap justify-evenly gap-3">
                   {/* Sample popular cities */}
-                  <p>Dubai</p>
-                  <p>New York</p>
-                  <p>London</p>
-                  <p>Paris</p>
-                  <p>Tokyo</p>
-                  <p>Singapore</p>
+                  <p onClick={() => handleSelectPopularCity("Dubai")}>Dubai</p>
+                  <p onClick={() => handleSelectPopularCity("New York")}>New York</p>
+                  <p onClick={() => handleSelectPopularCity("London")}>London</p>
+                  <p onClick={() => handleSelectPopularCity("Paris")}>Paris</p>
+                  <p onClick={() => handleSelectPopularCity("Tokyo")}>Tokyo</p>
+                  <p onClick={() => handleSelectPopularCity("Singapore")}>Singapore</p>
                 </div>
               </div>
             )}
