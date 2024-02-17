@@ -1,10 +1,19 @@
 import FlightTab from "./FlightTab";
 import { PiAirplaneInFlightBold } from "react-icons/pi";
 import { useState } from "react";
+import DatePicker from "./DatePicker";
+import InputModal from "./InputModal";
+import DropDown from "./DropDown";
 
 const SearchFormTab = () => {
   const [activeTab, setActiveTab] = useState("flights");
-
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+  // const handleSwap = () => {
+  //   const temp = input1;
+  //   setInput1(input2);
+  //   setInput2(temp);
+  // };
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
@@ -50,11 +59,15 @@ const SearchFormTab = () => {
         />
         <div
           role="tabpanel"
-          className="tab-content bg-white border-base-300 h-[35vh] rounded-box p-6"
+          className="tab-content bg-white border-base-300 mt-3 h-[35vh] rounded-box p-6"
         >
-          <span>
-            <FlightTab />
+          <span className="flex flex-row items-center">
+            <div className="w-full relative mr-2">
+              <InputModal inputValue={input1} setInputValue={setInput1} />
+            </div>
+            <DatePicker />
           </span>
+          <DropDown />
         </div>
         {/* Third Tab */}
         <a

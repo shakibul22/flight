@@ -5,6 +5,7 @@ import InputModal from "./InputModal";
 import ToInputModal from "./ToInputModal";
 // import { getAllAirports } from "../Actions/airport"
 import DropDown from "./DropDown";
+import Multicity from "./Multicity";
 const FlightTab = () => {
   const [activeTab, setActiveTab] = useState("roundTrip"); // Set default active tab
   const handleTabChange = (tabName) => {
@@ -17,7 +18,6 @@ const FlightTab = () => {
     setInput1(input2);
     setInput2(temp);
   };
- 
 
   return (
     <div>
@@ -37,11 +37,7 @@ const FlightTab = () => {
         <div role="tabpanel" className="tab-content w-[105vh]  p-5">
           <div className="flex justify-start gap-4 items-center">
             <div className="w-full relative mr-2">
-              <InputModal
-                inputValue={input1}
-              
-                setInputValue={setInput1}
-              />
+              <InputModal inputValue={input1} setInputValue={setInput1} />
             </div>
             <button
               onClick={handleSwap}
@@ -76,7 +72,27 @@ const FlightTab = () => {
           onClick={() => handleTabChange("roundTrip")}
         />
         <div role="tabpanel" className="tab-content p-5 ">
-          Round-trip
+          <div className="flex justify-start gap-4 items-center">
+            <div className="w-full relative mr-2">
+              <InputModal inputValue={input1} setInputValue={setInput1} />
+            </div>
+            <button
+              onClick={handleSwap}
+              className="z-10 absolute transform translate-x-56 overflow-auto rounded-full border-white border-4"
+            >
+              <MdSwapHoriz className="text-lg  btn btn-circle   " />{" "}
+              {/* Swap icon */}
+            </button>
+
+            {/* Arrow button */}
+            <div className="w-full relative">
+              {" "}
+              <ToInputModal inputValue={input2} setInputValue={setInput2} />
+            </div>
+            <div className="w-full">
+              <DatePicker />
+            </div>
+          </div>
         </div>
 
         <input
@@ -92,7 +108,7 @@ const FlightTab = () => {
           onClick={() => handleTabChange("multiCity")}
         />
         <div role="tabpanel" className="tab-content p-5">
-          Multi-city
+          <Multicity />
         </div>
       </div>
       <div>
