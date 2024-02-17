@@ -69,10 +69,21 @@ const SearchFormTab = () => {
               <div className="w-full relative mr-2 ">
                 <InputModal inputValue={input1} setInputValue={setInput1} />
               </div>
-              <DatePicker />
-              <GuestRoom />
+              <div className="w-full">
+                <DatePicker />
+              </div>
+              <div className="w-full">
+                <GuestRoom />
+              </div>
             </div>
-            <DropDown />
+
+            <div className="flex flex-row justify-between items-center">
+              <div className="flex gap-3">
+                <input type="checkbox" name="free" id="" />
+                <span>Free Collection</span>
+              </div>
+              <button className="btn btn-success text-white">Search</button>
+            </div>
           </div>
         </div>
         {/* Third Tab */}
