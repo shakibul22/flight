@@ -13,12 +13,14 @@ const FlightTab = () => {
   };
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
-  const handleSwap = () => {
-    const temp = input1;
-    setInput1(input2);
-    setInput2(temp);
-  };
 
+  const handleSwap = () => {
+    if (input1 && input2) {
+      const temp = input1;
+      setInput1(input2);
+      setInput2(temp);
+    }
+  };
   return (
     <div>
       <div role="tablist" className="tabs ">
@@ -41,10 +43,14 @@ const FlightTab = () => {
             </div>
             <button
               onClick={handleSwap}
-              className="z-10 absolute transform  translate-x-[155px] 2xl:translate-x-56 overflow-auto rounded-full border-white border-4"
+              className={`${
+                input1 && input2
+                  ? "bg-green-500"
+                  : "bg-gray-300 cursor-not-allowed"
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[220px] overflow-auto rounded-full border-white border-4`}
+              disabled={!input1 || !input2}
             >
-              <MdSwapHoriz className="text-  btn btn-circle   " />{" "}
-              {/* Swap icon */}
+              <MdSwapHoriz className="text-xs  text-gray-950 w-10 h-10" />
             </button>
 
             {/* Arrow button */}
@@ -78,12 +84,15 @@ const FlightTab = () => {
             </div>
             <button
               onClick={handleSwap}
-              className="z-10 absolute transform  translate-x-[155px] 2xl:translate-x-56 overflow-auto rounded-full border-white border-4"
+              className={`${
+                input1 && input2
+                  ? "bg-green-500"
+                  : "bg-gray-300 cursor-not-allowed"
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[220px] overflow-auto rounded-full border-white border-4`}
+              disabled={!input1 || !input2}
             >
-                <MdSwapHoriz className="text-xs  bg-slate-100 text-gray-950 w-10 h-10  " />{" "}
-              {/* Swap icon */}
+              <MdSwapHoriz className="text-xs border-2  ring text-gray-950 w-10 h-10" />
             </button>
-
             {/* Arrow button */}
             <div className="w-full relative">
               {" "}

@@ -178,19 +178,47 @@ const DestinationInput = () => {
                 <h3 className="font-medium mb-4">Popular Cities</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-3 justify-evenly gap-3">
                   {/* Sample popular cities */}
-                  <p onClick={() => handleSelectPopularCity("Bangladesh")}>
-                    Dubai
+                  <p onClick={() => handleSelectPopularCity("Dhaka")}>Dhaka</p>
+                  <p onClick={() => handleSelectPopularCity("Cox's Bazar")}>
+                    Cox's Bazar
                   </p>
-                  <p onClick={() => handleSelectPopularCity("Sylhet")}>
-                    New York
+                  <p onClick={() => handleSelectPopularCity("Kuala Lumpur")}>
+                    Kuala Lumpur
                   </p>
-                  <p onClick={() => handleSelectPopularCity("India")}>London</p>
-                  <p onClick={() => handleSelectPopularCity("Srilanka")}>
-                    Paris
-                  </p>
-                  <p onClick={() => handleSelectPopularCity("Tokyo")}>Tokyo</p>
+                  <p onClick={() => handleSelectPopularCity("Dubai")}>Dubai</p>
                   <p onClick={() => handleSelectPopularCity("Singapore")}>
                     Singapore
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Kolkata")}>
+                    Kolkata
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Bangkok")}>
+                    Bangkok
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("New Delhi")}>
+                    New Delhi
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Makkah")}>
+                    Makkah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Al Madinah")}>
+                    Al Madinah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Jeddah")}>
+                    Jeddah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Kathmandu")}>
+                    Kathmandu
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Sharjah")}>
+                    Sharjah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Kigali")}>
+                    Kigali
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Cairo")}>Cairo</p>
+                  <p onClick={() => handleSelectPopularCity("Sylhet")}>
+                    Sylhet
                   </p>
                 </div>
               </div>

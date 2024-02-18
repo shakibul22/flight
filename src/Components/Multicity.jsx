@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import InputModal from "./InputModal"; // Assuming InputModal is a component defined elsewhere
 import ToInputModal from "./ToInputModal"; // Assuming ToInputModal is a component defined elsewhere
-import DatePicker from "./DatePicker"; // Assuming DatePicker is a component defined elsewhere
+// Assuming DatePicker is a component defined elsewhere
 import { MdSwapHoriz } from "react-icons/md"; // Assuming MdSwapHoriz is imported from react-icons library
 import Deparature from "./Deparature";
-import { MdOutlineSwapHorizontalCircle } from "react-icons/md";
+
 
 const Multicity = () => {
   const [cities, setCities] = useState([
@@ -53,14 +53,12 @@ const Multicity = () => {
           </div>
           <button
             onClick={() => handleSwap(index)}
-            className={`z-10 absolute transform  translate-x-[140px] 2xl:translate-x-56  overflow-auto rounded-full border-white border-4 ${
-              city.input1 && city.input2
-                ? "text-green-400"
-                : "text-gray-200 bg-gray-400"
+            className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[150px]  2xl:translate-x-[222px]   overflow-auto rounded-full border-white border-4 ${
+              city.input1 && city.input2 ? "bg-green-400" : "bg-gray-200 "
             }`}
             disabled={!city.input1 || !city.input2}
           >
-            <MdSwapHoriz className="text-xs  bg-slate-100 text-gray-950 w-10 h-10  " />{" "}
+            <MdSwapHoriz className="text-xs   text-gray-950 w-10 h-10  " />{" "}
           </button>
           {/* Arrow button */}
           <div className="w-full relative">
