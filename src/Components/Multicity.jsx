@@ -60,8 +60,7 @@ const Multicity = () => {
             }`}
             disabled={!city.input1 || !city.input2}
           >
-            <MdOutlineSwapHorizontalCircle className="text-lg btn-circle  " />{" "}
-            {/* Swap icon */}
+            <MdSwapHoriz className="text-xs  bg-slate-100 text-gray-950 w-10 h-10  " />{" "}
           </button>
           {/* Arrow button */}
           <div className="w-full relative">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MdClose, MdLocalAirport } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 import { GiCommercialAirplane } from "react-icons/gi";
 import { FaLocationDot } from "react-icons/fa6";
@@ -58,6 +58,7 @@ const DestinationInput = () => {
 
   const handleClearInput = () => {
     setInputValue(""); // Clear the input by setting it to an empty string
+    setShowCloseIcon(false); // Hide the close icon
   };
 
   const handleFocus = () => {
@@ -94,6 +95,8 @@ const DestinationInput = () => {
     setModal(false);
     setFilteredAirports([]);
   };
+
+  // Function to generate short form for airport name within 3 characters
   function generateShortForm(airportName) {
     const words = airportName.split(" ");
     let shortForm = "";
@@ -109,7 +112,6 @@ const DestinationInput = () => {
     }
     return shortForm.toUpperCase();
   }
-
   return (
     <div
       className={`duration-200  absolute -mt-6  ${

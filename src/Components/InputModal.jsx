@@ -3,9 +3,9 @@ import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiCommercialAirplane } from "react-icons/gi";
+
 const InputModal = ({ inputValue, setInputValue }) => {
   const [modal, setModal] = useState(false);
-  const [showCloseIcon, setShowCloseIcon] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
   const modalRef = useRef(null);
@@ -55,19 +55,17 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   const handleFocus = () => {
     setModal(true);
-    setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    setShowCloseIcon(value.trim().length > 0); // Show close icon if input has value
   };
 
   const handleKeyDown = (e) => {
     if (e.key !== "Backspace") {
-      // Show close icon when user inputs something from the keyboard
-      setShowCloseIcon(true);
+      // Show modal when user inputs something from the keyboard
+      setModal(true);
     }
   };
 
@@ -86,7 +84,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
     setModal(false);
     setFilteredAirports([]);
   };
-  // Function to generate short form for airport name
+
   // Function to generate short form for airport name within 3 characters
   function generateShortForm(airportName) {
     const words = airportName.split(" ");
@@ -106,7 +104,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   return (
     <div
-      className={`duration-200 absolute -mt-6  ${
+      className={`duration-200 absolute -mt-6 ${
         modal ? "w-[350px] z-30 bg-white border" : ""
       }`}
     >
@@ -125,9 +123,9 @@ const InputModal = ({ inputValue, setInputValue }) => {
             onFocus={handleFocus}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
-          {showCloseIcon && (
+          {inputValue && (
             <MdClose
-              className="transform translate-x-32 lg:translate-x-48 z-50  text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
+              className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}
@@ -144,10 +142,10 @@ const InputModal = ({ inputValue, setInputValue }) => {
                 <div
                   key={airport.code}
                   onClick={() => handleSelectAirport(airport)}
-                  className="cursor-pointer grid  grid-cols-2 items-center w-[55vh] justify-between gap-5"
+                  className="cursor-pointer grid grid-cols-2 items-center w-[55vh] justify-between gap-5"
                 >
                   <div className="border-b-2 flex flex-row justify-between gap-6 hover:bg-[#e7fddc] p-2 ">
-                    <span className="flex flex-row  items-center gap-2">
+                    <span className="flex flex-row items-center gap-2">
                       {airport.airport_name
                         .toLowerCase()
                         .includes("airport") ? (
@@ -169,19 +167,28 @@ const InputModal = ({ inputValue, setInputValue }) => {
                 <h3 className="font-medium mb-4">Popular Cities</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-3 justify-evenly gap-3">
                   {/* Sample popular cities */}
-                  <p onClick={() => handleSelectPopularCity("Bangladesh")}>
-                    Dubai
+                  <p onClick={() => handleSelectPopularCity("Dhaka")}>Dhaka</p>
+                  <p onClick={() => handleSelectPopularCity("Chittagong")}>
+                    Chittagong
                   </p>
                   <p onClick={() => handleSelectPopularCity("Sylhet")}>
-                    New York
+                    Sylhet
                   </p>
-                  <p onClick={() => handleSelectPopularCity("India")}>London</p>
-                  <p onClick={() => handleSelectPopularCity("Srilanka")}>
-                    Paris
+                  <p onClick={() => handleSelectPopularCity("Rajshahi")}>
+                    Rajshahi
                   </p>
-                  <p onClick={() => handleSelectPopularCity("Tokyo")}>Tokyo</p>
-                  <p onClick={() => handleSelectPopularCity("Singapore")}>
-                    Singapore
+                  <p onClick={() => handleSelectPopularCity("Cox's Bazar")}>
+                    Cox's Bazar
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Jessore")}>
+                    Jessore
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Barisal")}>
+                    Barisal
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Pabna")}>Pabna</p>
+                  <p onClick={() => handleSelectPopularCity("Saidpur")}>
+                    Saidpur
                   </p>
                 </div>
               </div>

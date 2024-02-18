@@ -13,14 +13,16 @@ export default function GuestRoom() {
   const [roomLabel, setRoomLabel] = useState("Rooms");
 
   const handleIncrement = (index, type) => {
-    setRooms((prevRooms) => {
-      const updatedRooms = [...prevRooms];
-      updatedRooms[index] = {
-        ...updatedRooms[index],
-        [type]: Math.min(updatedRooms[index][type] + 1, 9),
-      };
-      return updatedRooms;
-    });
+    const updatedRooms = [...rooms];
+    const room = updatedRooms[index];
+
+    if (type === "adults" && room.adults < 9) {
+      room.adults++;
+    } else if (type === "children" && room.children < 4) {
+      room.children++;
+    }
+
+    setRooms(updatedRooms);
   };
 
   const handleDecrement = (index, type) => {
@@ -81,6 +83,16 @@ export default function GuestRoom() {
                     disabled={room.adults === 1}
                     className={`px-2 rounded-l ${
                       room.adults === 1 ? "opacity-50" : ""
+                    }`}
+                  >
+                    -
+                  </button>
+                  <span className="px-4">{room.adults}</span>
+                  <button
+                    onClick={() => handleIncrement(index, "adults")}
+                    disabled={room.adults === 9}
+                    className={`px-2 rounded-l ${
+                      room.adults === 9 ? "opacity-50" : ""
                     }`}
                   >
                     -
