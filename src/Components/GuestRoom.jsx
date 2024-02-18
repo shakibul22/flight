@@ -11,6 +11,7 @@ export default function GuestRoom() {
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [roomLabel, setRoomLabel] = useState("Rooms");
+  const [roomAdded, setRoomAdded] = useState(false); // New state to track if a room has been added
 
   const handleIncrement = (index, type) => {
     const updatedRooms = [...rooms];
@@ -38,6 +39,7 @@ export default function GuestRoom() {
 
   const handleAddRoom = () => {
     setRooms((prevRooms) => [...prevRooms, { adults: 1, children: 0 }]);
+    setRoomAdded(true); // Set the flag to indicate that a room has been added
   };
 
   const handleRemoveRoom = (indexToRemove) => {
@@ -52,6 +54,7 @@ export default function GuestRoom() {
     const totalRooms = rooms.length;
     setRoomLabel(`Rooms (${totalRooms})`);
     setIsModalOpen(false);
+    setRoomAdded(false); // Reset the flag when the apply button is clicked
   };
 
   return (
@@ -63,7 +66,7 @@ export default function GuestRoom() {
           labelId="room-label"
           id="room-select"
           autoWidth
-          open={isModalOpen}
+          open={isModalOpen || roomAdded} // Keep the modal open if a room has been added
           onClose={() => setIsModalOpen(false)}
           onOpen={() => setIsModalOpen(true)}
         >
@@ -87,16 +90,7 @@ export default function GuestRoom() {
                   >
                     -
                   </button>
-                  <span className="px-4">{room.adults}</span>
-                  <button
-                    onClick={() => handleIncrement(index, "adults")}
-                    disabled={room.adults === 9}
-                    className={`px-2 rounded-l ${
-                      room.adults === 9 ? "opacity-50" : ""
-                    }`}
-                  >
-                    -
-                  </button>
+
                   <span className="px-4">{room.adults}</span>
                   <button
                     onClick={() => handleIncrement(index, "adults")}
@@ -145,16 +139,19 @@ export default function GuestRoom() {
               </div>
             </MenuItem>
           ))}
-          <MenuItem>
-            <Button variant="contained" onClick={handleAddRoom}>
-              Add Room
-            </Button>
-          </MenuItem>
-          <MenuItem>
-            <Button variant="contained" onClick={handleApplyClick}>
-              Apply
-            </Button>
-          </MenuItem>
+          ,
+          <div className="flex flex-row justify-between ">
+            <MenuItem>
+              <Button variant="contained" onClick={handleAddRoom}>
+                Add Room
+              </Button>
+            </MenuItem>
+            <MenuItem>
+              <Button variant="contained" onClick={handleApplyClick}>
+                Apply
+              </Button>
+            </MenuItem>
+          </div>
         </Select>
       </FormControl>
     </div>
