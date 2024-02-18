@@ -134,7 +134,7 @@ const DestinationInput = () => {
             onBlur={() => setInputFocused(false)} // Set input focus state to false
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
-          {showCloseIcon && (
+          {modal && showCloseIcon && (
             <MdClose
               className="transform translate-x-48 z-50  text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}

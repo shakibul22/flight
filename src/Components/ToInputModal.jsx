@@ -103,28 +103,38 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
   }
 
   return (
-    <div className={`duration-200 absolute -mt-6 ${modal ? "w-[350px] z-30 bg-white border" : ""}`}>
+    <div
+      className={`duration-200 absolute -mt-6 ${
+        modal ? "w-[350px] z-30 bg-white border" : ""
+      }`}
+    >
       <div className={`${modal ? "w-full z-[50]" : "static"}`} ref={modalRef}>
         <div className="flex justify-between items-center relative">
           <input
             type="text"
             placeholder="To"
             className={`border-2 h-14 p-4 pl-8 w-[170px] lg:w-full duration-200 ${
-              modal ? "w-full z-20 pl-3 border-4 border-[#e7fddc]" : "w-[25wh] z-0"
+              modal
+                ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
+                : "w-[25wh] z-0"
             }`}
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
-          {showCloseIcon && (
+          {modal && showCloseIcon && (
             <MdClose
               className="transform translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}
         </div>
-        <div className={`duration-200 ${modal ? "block w-full p-5 bg-white text-black z-50" : "w-0 hidden"}`}>
+        <div
+          className={`duration-200 ${
+            modal ? "block w-full p-5 bg-white text-black z-50" : "w-0 hidden"
+          }`}
+        >
           <div>
             {/* Render filtered airports */}
             <div>
@@ -136,7 +146,9 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                 >
                   <div className="border-b-2 flex flex-row justify-between gap-6 hover:bg-[#e7fddc] p-2 ">
                     <span className="flex flex-row items-center gap-2">
-                      {airport.airport_name.toLowerCase().includes("airport") ? (
+                      {airport.airport_name
+                        .toLowerCase()
+                        .includes("airport") ? (
                         <GiCommercialAirplane className="text-3xl font-bold" />
                       ) : (
                         <FaLocationDot className="text-2xl font-bold" />
@@ -154,18 +166,40 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                 <h3 className="font-medium">Popular Cities</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-3 justify-evenly gap-3">
                   {/* Sample popular cities */}
-                  <p onClick={() => handleSelectPopularCity("Jeddah")}>Jeddah</p>
-                  <p onClick={() => handleSelectPopularCity("Riyadh")}>Riyadh</p>
-                  <p onClick={() => handleSelectPopularCity("Dammam")}>Dammam</p>
-                  <p onClick={() => handleSelectPopularCity("Muscat")}>Muscat</p>
-                  <p onClick={() => handleSelectPopularCity("Al Madinah")}>Al Madinah</p>
-                  <p onClick={() => handleSelectPopularCity("Kuwait City")}>Kuwait City</p>
+                  <p onClick={() => handleSelectPopularCity("Jeddah")}>
+                    Jeddah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Riyadh")}>
+                    Riyadh
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Dammam")}>
+                    Dammam
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Muscat")}>
+                    Muscat
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Al Madinah")}>
+                    Al Madinah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Kuwait City")}>
+                    Kuwait City
+                  </p>
                   <p onClick={() => handleSelectPopularCity("Doha")}>Doha</p>
-                  <p onClick={() => handleSelectPopularCity("Abu Dhabi")}>Abu Dhabi</p>
-                  <p onClick={() => handleSelectPopularCity("Sharjah")}>Sharjah</p>
-                  <p onClick={() => handleSelectPopularCity("Bangkok")}>Bangkok</p>
-                  <p onClick={() => handleSelectPopularCity("Manama")}>Manama</p>
-                  <p onClick={() => handleSelectPopularCity("Kolkata")}>Kolkata</p>
+                  <p onClick={() => handleSelectPopularCity("Abu Dhabi")}>
+                    Abu Dhabi
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Sharjah")}>
+                    Sharjah
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Bangkok")}>
+                    Bangkok
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Manama")}>
+                    Manama
+                  </p>
+                  <p onClick={() => handleSelectPopularCity("Kolkata")}>
+                    Kolkata
+                  </p>
                   <p onClick={() => handleSelectPopularCity("Tabuk")}>Tabuk</p>
                 </div>
               </div>

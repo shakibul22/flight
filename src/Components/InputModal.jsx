@@ -123,12 +123,13 @@ const InputModal = ({ inputValue, setInputValue }) => {
             onFocus={handleFocus}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
-          {inputValue && (
-            <MdClose
-              className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
-              onClick={handleClearInput}
-            />
-          )}
+       {modal && inputValue && (
+  <MdClose
+    className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
+    onClick={handleClearInput}
+  />
+)}
+
         </div>
         <div
           className={`duration-200 ${
