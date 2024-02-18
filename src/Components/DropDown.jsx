@@ -44,7 +44,10 @@ export default function DropDown() {
     { id: 1, name: "American Express" },
     { id: 2, name: "Visa" },
     { id: 3, name: "Mastercard" },
-    { id: 4, name: "Discover" },
+    { id: 4, name: "Dinnercard" },
+    { id: 5, name: "Master Card debit" },
+    { id: 6, name: "Master Card credit" },
+    { id: 7, name: "Bank Transfer" },
   ];
 
   const handlePaymentTypeChange = (event, type) => {
@@ -260,18 +263,28 @@ export default function DropDown() {
               label="Payment Type"
               renderValue={(selected) => `${selected.length} selected`}
             >
-              {paymentTypes.map((type) => (
-                <MenuItem key={type.id} value={type.name}>
-                  <input
-                    type="checkbox"
-                    checked={selectedPaymentTypes.includes(type.name)}
-                    onChange={(event) =>
-                      handlePaymentTypeChange(event, type.name)
-                    }
-                  />
-                  <span>{type.name}</span>
-                </MenuItem>
-              ))}
+              <p className="w-[40vh] p-5">
+                By Selecting One Or More (Max 10) Payment Types, Prices On Wego
+                Will Include Applicable Minimum Payment Fee. Please Note That
+                Not All Providers Support All Payment Types.
+              </p>
+              <div className="grid grid-cols-2">
+                {paymentTypes.map((type) => (
+                  <div key={type.id} className="">
+                    <MenuItem>
+                      <input
+                        type="checkbox"
+                        checked={selectedPaymentTypes.includes(type.name)}
+                        onChange={(event) =>
+                          handlePaymentTypeChange(event, type.name)
+                        }
+                      />
+                      <span className="ml-2">{type.name}</span>
+                    </MenuItem>
+                  </div>
+                ))}
+              </div>
+
               {/* Apply Button */}
               {!isApplyClicked && ( // Render apply button only if not clicked
                 <MenuItem>

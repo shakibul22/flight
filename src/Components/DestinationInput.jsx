@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MdClose, MdLocalAirport } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
+import { GiCommercialAirplane } from "react-icons/gi";
+import { FaLocationDot } from "react-icons/fa6";
 
 const DestinationInput = () => {
   const [inputValue, setInputValue] = useState("");
@@ -92,6 +94,21 @@ const DestinationInput = () => {
     setModal(false);
     setFilteredAirports([]);
   };
+  function generateShortForm(airportName) {
+    const words = airportName.split(" ");
+    let shortForm = "";
+    for (let i = 0; i < words.length; i++) {
+      if (shortForm.length < 3) {
+        shortForm += words[i].substring(
+          0,
+          Math.min(3 - shortForm.length, words[i].length)
+        );
+      } else {
+        break;
+      }
+    }
+    return shortForm.toUpperCase();
+  }
 
   return (
     <div
@@ -136,12 +153,18 @@ const DestinationInput = () => {
                   onClick={() => handleSelectAirport(airport)}
                   className="cursor-pointer grid  grid-cols-2 items-center w-[55vh] justify-between gap-5"
                 >
-                  <div className="border-b-2 flex flex-row justify-between ">
+                  <div className="border-b-2 flex flex-row justify-between gap-6 hover:bg-[#e7fddc] p-2 ">
                     <span className="flex flex-row  items-center gap-2">
-                      <MdLocalAirport /> {airport.airport_name} -
-                      {airport.country_name}{" "}
+                      {airport.airport_name
+                        .toLowerCase()
+                        .includes("airport") ? (
+                        <GiCommercialAirplane className="text-3xl font-bold" />
+                      ) : (
+                        <FaLocationDot className="text-2xl font-bold" />
+                      )}
+                      {airport.airport_name} - {airport.country_name}
                     </span>
-                    <span>{airport.code}</span>
+                    <span>{generateShortForm(airport.airport_name)}</span>
                   </div>
                 </div>
               ))}
