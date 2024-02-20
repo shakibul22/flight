@@ -15,6 +15,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
     async function fetchAirports() {
       try {
         const res = await getAllAirports();
+        // console.log(res);
         setAirport(res);
       } catch (error) {
         console.error("Error fetching airport data:", error);
@@ -27,7 +28,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
     // Filter airports based on input value
     if (inputValue.trim() !== "") {
       const filtered = airport.filter((item) =>
-        item.airport_name.toLowerCase().includes(inputValue.toLowerCase())
+        item.search_contents.toLowerCase().includes(inputValue.toLowerCase())
       );
       setFilteredAirports(filtered);
     } else {
@@ -104,7 +105,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   return (
     <div
-      className={`duration-200 absolute -mt-6 ${
+      className={`duration-200 absolute -mt-6 rounded-lg border-2 border border-black ${
         modal ? "w-[350px] z-30 bg-white border" : ""
       }`}
     >
@@ -113,7 +114,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
           <input
             type="text"
             placeholder="From"
-            className={`border-2 h-14 p-4 pl-8 w-[200px] lg:w-full duration-200 ${
+            className={`rounded-sm border   h-14 p-4 pl-8 w-[200px] lg:w-full duration-200 ${
               modal
                 ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
                 : "w-[27wh] z-0"
@@ -123,13 +124,12 @@ const InputModal = ({ inputValue, setInputValue }) => {
             onFocus={handleFocus}
             onKeyDown={handleKeyDown} // Listen for keyboard input
           />
-       {modal && inputValue && (
-  <MdClose
-    className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
-    onClick={handleClearInput}
-  />
-)}
-
+          {modal && inputValue && (
+            <MdClose
+              className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
+              onClick={handleClearInput}
+            />
+          )}
         </div>
         <div
           className={`duration-200 ${
@@ -154,9 +154,9 @@ const InputModal = ({ inputValue, setInputValue }) => {
                       ) : (
                         <FaLocationDot className="text-2xl font-bold" />
                       )}
-                      {airport.airport_name} - {airport.country_name}
+                      {airport.city_name} ,{airport.country_name}
                     </span>
-                    <span>{generateShortForm(airport.airport_name)}</span>
+                    <span>{generateShortForm(airport.city_code)}</span>
                   </div>
                 </div>
               ))}

@@ -88,7 +88,8 @@ const FlightTab = () => {
                 input1 && input2
                   ? "bg-green-500"
                   : "bg-gray-300 cursor-not-allowed"
-              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[220px] overflow-auto rounded-full border-white border-4`}
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[220px] overflow-auto 
+              rounded-full border-2 border-black translate-y-1 h-15 w-15 `}
               disabled={!input1 || !input2}
             >
               <MdSwapHoriz className="text-xs border-2  ring text-gray-950 w-10 h-10" />

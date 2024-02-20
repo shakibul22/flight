@@ -7,9 +7,12 @@ import Button from "@mui/material/Button";
 import { IoWomanOutline } from "react-icons/io5";
 import { IoMan } from "react-icons/io5";
 import { FaBaby } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-export default function DropDown() {
-  const [selectedPaymentTypes, setSelectedPaymentTypes] = useState([]);
+
+const Passenger = () => {
+
+
+
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [passengerCounts, setPassengerCounts] = useState({
     adult: 0,
@@ -41,39 +44,14 @@ export default function DropDown() {
     setIsApplyClicked(true); // Set apply button clicked
   };
 
-  const paymentTypes = [
-    { id: 1, name: "American Express" },
-    { id: 2, name: "Visa" },
-    { id: 3, name: "Mastercard" },
-    { id: 4, name: "Dinnercard" },
-    { id: 5, name: "Master Card debit" },
-    { id: 6, name: "Master Card credit" },
-    { id: 7, name: "Bank Transfer" },
-  ];
-
-  const handlePaymentTypeChange = (event, type) => {
-    const isChecked = event.target.checked;
-    if (isChecked) {
-      setSelectedPaymentTypes([...selectedPaymentTypes, type]);
-    } else {
-      setSelectedPaymentTypes(
-        selectedPaymentTypes.filter((selectedType) => selectedType !== type)
-      );
-    }
-  };
+ 
 
   const isGreen =
     passengerCounts.adult + passengerCounts.children + passengerCounts.infant <
     9;
-
-  return (
-    <div className="flex flex-row justify-between">
-      <div className="flex flex-row gap-4 items-center">
-        <input type="checkbox" name="right" id="" />
-        <span>Direct Flight Only</span>
-      </div>
-      <div className="flex flex-row justify-evenly gap-5">
+    return (
         <div>
+             <div>
           <FormControl sx={{ m: 1, minWidth: 180 }}>
             <InputLabel id="Passengers">{passengerLabel}</InputLabel>
             <Select
@@ -225,84 +203,9 @@ export default function DropDown() {
               )}
             </Select>
           </FormControl>
+        </div> 
         </div>
+    );
+};
 
-        {/* Travel Class */}
-        <div>
-          <FormControl sx={{ m: 1, minWidth: 180 }}>
-            <InputLabel id="travel-class-label">Travel Class</InputLabel>
-            <Select
-              labelId="travel-class-label"
-              id="travel-class-select"
-              autoWidth
-              label="Travel Class"
-              variant="standard"
-            >
-              <MenuItem value={10}>Premium Economy</MenuItem>
-              <MenuItem value={21}>Business Class</MenuItem>
-              <MenuItem value={22}>First Class</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        {/* Payment Type */}
-        <div>
-          <FormControl sx={{ m: 1, minWidth: 180 }}>
-            <InputLabel id="payment-type-label">Payment Type</InputLabel>
-            <Select
-              labelId="payment-type-label"
-              id="payment-type-select"
-              multiple
-              variant="standard"
-              open={isMenuOpen}
-              onClose={() => setIsMenuOpen(false)}
-              onOpen={() => setIsMenuOpen(true)}
-              value={selectedPaymentTypes}
-              onChange={(event) =>
-                handlePaymentTypeChange(event, event.target.value)
-              }
-              autoWidth
-              label="Payment Type"
-              renderValue={(selected) => `${selected.length} selected`}
-            >
-              <p className="w-[40vh] p-5">
-                By Selecting One Or More (Max 10) Payment Types, Prices On Wego
-                Will Include Applicable Minimum Payment Fee. Please Note That
-                Not All Providers Support All Payment Types.
-              </p>
-              <div className="grid grid-cols-2">
-                {paymentTypes.map((type) => (
-                  <div key={type.id} className="">
-                    <MenuItem>
-                      <input
-                        type="checkbox"
-                        checked={selectedPaymentTypes.includes(type.name)}
-                        onChange={(event) =>
-                          handlePaymentTypeChange(event, type.name)
-                        }
-                      />
-                      <span className="ml-2">{type.name}</span>
-                    </MenuItem>
-                  </div>
-                ))}
-              </div>
-
-              {/* Apply Button */}
-              {!isApplyClicked && ( // Render apply button only if not clicked
-                <MenuItem>
-                  <Button variant="contained" onClick={handleApplyClick}>
-                    Apply
-                  </Button>
-                </MenuItem>
-              )}
-            </Select>
-          </FormControl>
-        </div>
-        <Link to="/flightSearch">
-          <button type="button" className="btn btn-success px-8">
-            Search
-          </button>
-        </Link>
-      </div>
-    </div>
-  );
-}
+export default Passenger;

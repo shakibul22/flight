@@ -28,7 +28,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
     // Filter airports based on input value
     if (inputValue.trim() !== "") {
       const filtered = airport.filter((item) =>
-        item.airport_name.toLowerCase().includes(inputValue.toLowerCase())
+        item.search_contents.toLowerCase().includes(inputValue.toLowerCase())
       );
       setFilteredAirports(filtered);
     } else {
@@ -153,9 +153,9 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                       ) : (
                         <FaLocationDot className="text-2xl font-bold" />
                       )}
-                      {airport.airport_name} - {airport.country_name}
+                       {airport.city_name} ,{airport.country_name}
                     </span>
-                    <span>{generateShortForm(airport.airport_name)}</span>
+                    <span>{generateShortForm(airport.city_code)}</span>
                   </div>
                 </div>
               ))}
