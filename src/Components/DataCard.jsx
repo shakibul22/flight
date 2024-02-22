@@ -95,7 +95,7 @@ const DataCard = ({ f }) => {
                 </td>
                 <td>
                   <div>
-                    <p>{baggage[0].origin}</p>
+                    {/* <p>{baggage[0].origin}</p> */}
                     <p> {formattedArrivalTime}</p>
                   </div>
                 </td>

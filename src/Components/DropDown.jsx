@@ -67,10 +67,10 @@ export default function DropDown() {
     9;
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="flex flex-row gap-4 items-center">
+    <div className="flex flex-row justify-between gap-9">
+      <div className="flex flex-row gap-4  mr-5 items-center">
         <input type="checkbox" name="right" id="" />
-        <span>Direct Flight Only</span>
+        <span>Direct Flight </span>
       </div>
       <div className="flex flex-row justify-evenly gap-5">
         <div>
@@ -297,7 +297,6 @@ export default function DropDown() {
             </Select>
           </FormControl>
         </div>
-      
       </div>
     </div>
   );

@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef,useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 import { GiCommercialAirplane } from "react-icons/gi";
 import { FaLocationDot } from "react-icons/fa6";
 import { createContextProvider } from "../Context/Context";
-const ToInputModal = ({  inputValue,  setInputValue,}) => {
+const ToInputModal = ({ inputValue, setInputValue }) => {
   const [modal, setModal] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
-  const {setSelectedCityCode1}=useContext(createContextProvider)
+  const { setSelectedCityCode1 } = useContext(createContextProvider);
   const modalRef = useRef(null);
   useEffect(() => {
-    // Fetch airport data when the component mounts
     async function fetchAirports() {
       try {
         const res = await getAllAirports();
@@ -22,17 +21,15 @@ const ToInputModal = ({  inputValue,  setInputValue,}) => {
       }
     }
     fetchAirports();
-  }, []); // Empty dependency array to ensure useEffect runs only once
+  }, []);
 
   useEffect(() => {
-    // Filter airports based on input value
     if (inputValue.trim() !== "") {
       const filtered = airport.filter((item) =>
         item.search_contents.toLowerCase().includes(inputValue.toLowerCase())
       );
       setFilteredAirports(filtered);
     } else {
-      // If input value is empty, show popular cities
       setFilteredAirports([]);
     }
   }, [inputValue, airport]);
@@ -51,46 +48,43 @@ const ToInputModal = ({  inputValue,  setInputValue,}) => {
   }, []);
 
   const handleClearInput = () => {
-    setInputValue(""); // Clear the input by setting it to an empty string
-    setShowCloseIcon(false); // Hide the close icon
+    setInputValue("");
+    setShowCloseIcon(false);
   };
 
   const handleFocus = () => {
     setModal(true);
-    setShowCloseIcon(inputValue.trim().length > 0); // Show close icon if input has value
+    setShowCloseIcon(inputValue.trim().length > 0);
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    setShowCloseIcon(value.trim().length > 0); // Show close icon if input has value
+    setShowCloseIcon(value.trim().length > 0);
   };
 
   const handleKeyDown = (e) => {
     if (e.key !== "Backspace") {
-      // Show close icon when user inputs something from the keyboard
       setShowCloseIcon(true);
     }
   };
 
   const handleSelectAirport = (selectedAirport) => {
     setInputValue(selectedAirport.airport_name);
-    setSelectedCityCode1(selectedAirport.city_code); // Set the selected city code in state
+    setSelectedCityCode1(selectedAirport.city_code);
     setModal(false);
     setFilteredAirports([]);
   };
 
   const handleSelectPopularCity = (cityName) => {
     setInputValue(cityName);
-    // Set the selected city code based on the city name
-    // You may need to adjust this logic based on how city codes are generated or stored in your application
-    const cityCode = cityName.toLowerCase().substring(0, 3); // Example logic: Extract first 3 characters of the city name
+
+    const cityCode = cityName.toLowerCase().substring(0, 3);
     setSelectedCityCode1(cityCode);
     setModal(false);
     setFilteredAirports([]);
   };
 
-  // Function to generate short form for airport name within 3 characters
   function generateShortForm(airportName) {
     const words = airportName.split(" ");
     let shortForm = "";
@@ -121,7 +115,7 @@ const ToInputModal = ({  inputValue,  setInputValue,}) => {
             className={`border-2 h-14 p-4 pl-8 w-[170px] lg:w-full duration-200 ${
               modal
                 ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
-                : "w-[25wh] z-0"
+                : "w-[25vh] z-0"
             }`}
             value={inputValue}
             onChange={handleChange}

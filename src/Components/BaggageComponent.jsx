@@ -10,7 +10,7 @@ const BaggageComponent = ({ baggage }) => {
       {baggage.map((item, index) => (
         <div key={index}>
           <div>Passenger Type: {item.passenger_type}</div>
-          <div>Origin: {item.origin}</div>
+          {/* <div>Origin: {item.origin}</div> */}
           <div>Destination: {item.destination}</div>
           <div>Baggage Type: {item.baggage_type}</div>
           {/* Render more baggage details as needed */}

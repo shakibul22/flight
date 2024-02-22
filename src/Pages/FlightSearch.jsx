@@ -6,31 +6,32 @@ import Passenger from "../Components/Passenger";
 import InputModal from "../Components/InputModal";
 import ToInputModal from "../Components/ToInputModal";
 import Deparature from "../Components/Deparature";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Filter from "../Components/Filter";
 import { getAllOneWay } from "../Actions/airport";
 import DataCard from "../Components/DataCard";
-import { Link } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+
+import { createContextProvider } from "../Context/Context";
 
 const FlightSearch = () => {
-  const [oneWay, setOneWay] = useState([]);
+  // const [oneWay, setOneWay] = useState([]);
   const [cities, setCities] = useState([{ input1: "", input2: "" }]);
+  const { data } = useContext(createContextProvider);
   // const input = useDispatch();
   // const { inputs } = useSelector((state) => state);
 
-  useEffect(() => {
-    handleOnWay();
-  }, []);
+  // useEffect(() => {
+  //   handleOnWay();
+  // }, []);
 
-  const handleOnWay = async () => {
-    try {
-      const res = await getAllOneWay();
-      setOneWay(res.data);
-    } catch (error) {
-      console.error("Error handling one-way search:", error);
-    }
-  };
+  // const handleOnWay = async () => {
+  //   try {
+  //     const res = await getAllOneWay();
+  //     setOneWay(res.data);
+  //   } catch (error) {
+  //     console.error("Error handling one-way search:", error);
+  //   }
+  // };
 
   const addFlight = () => {
     setCities([...cities, { input1: "", input2: "" }]);
@@ -64,6 +65,7 @@ const FlightSearch = () => {
     // You can make an API call here passing the cities data
   };
 
+  console.log(data);
   // const handleRoundTrip = async () => {
   //   try {
   //     const res = await getRoundTrip(); // Await the Promise
@@ -231,7 +233,7 @@ const FlightSearch = () => {
                 checked
               />
               <div role="tabpanel" className="tab-content ">
-                {oneWay?.map((f) => (
+                {data?.map((f) => (
                   <DataCard key={f._id} f={f} />
                 ))}
               </div>
@@ -244,7 +246,7 @@ const FlightSearch = () => {
                 aria-label="Fastest"
               />
               <div role="tabpanel" className="tab-content p-10">
-                {oneWay?.map((f) => (
+                {data?.map((f) => (
                   <DataCard key={f._id} f={f} />
                 ))}
               </div>

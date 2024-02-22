@@ -1,32 +1,46 @@
-import { useState } from "react";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
+import React, { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { createContextProvider } from "../Context/Context";
 
-export default function DatePicker() {
-  // Define state variable to hold the selected departure date
-  const [departureDate, setDepartureDate] = useState(null);
+export default function DatePickers() {
+  const [startDate, setStartDate] = useState(new Date("2024-05-20"));
+  const [returnDate, setReturnDate] = useState(null);
+  const { setDeparturePlaceholder, setReturnPlaceholder } = useContext(
+    createContextProvider
+  );
 
-  const handleChange = (newDateRange) => {
-    // Extract the departure date from the selected date range
-    const [departure, _] = newDateRange;
-    // Update the state with the departure date
-    setDepartureDate(departure);
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
-  console.log(departureDate);
+
+  const handleDepartureDateChange = (date) => {
+    setStartDate(date);
+    setDeparturePlaceholder(date ? formatDate(date) : "Departure");
+  };
+
+  const handleReturnDateChange = (date) => {
+    setReturnDate(date);
+    setReturnPlaceholder(date ? formatDate(date) : "Return");
+  };
+
   return (
-    <div className="w-[45vh]">
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DateRangePicker"]}>
-          {/* Pass the selectedDateRange as the value prop */}
-          <DateRangePicker
-            localeText={{ start: "Depart", end: "Return" }}
-            value={departureDate ? [departureDate, null] : [null, null]}
-            onChange={(newDateRange) => handleChange(newDateRange)}
-          />
-        </DemoContainer>
-      </LocalizationProvider>
+    <div className="flex justify-between items-center gap-5">
+      <DatePicker
+        className="border-2 h-12 p-3"
+        placeholderText={startDate ? formatDate(startDate) : "Departure"}
+        selected={startDate}
+        onChange={handleDepartureDateChange}
+      />
+      <DatePicker
+        className="border-2 h-12 p-3"
+        placeholderText={returnDate ? formatDate(returnDate) : "Return"}
+        selected={returnDate}
+        onChange={handleReturnDateChange}
+      />
     </div>
   );
 }
