@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 import { GiCommercialAirplane } from "react-icons/gi";
 import { FaLocationDot } from "react-icons/fa6";
-
-const ToInputModal = ({ inputValue, setInputValue }) => {
+import { createContextProvider } from "../Context/Context";
+const ToInputModal = ({  inputValue,  setInputValue,}) => {
   const [modal, setModal] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
+  const {setSelectedCityCode1}=useContext(createContextProvider)
   const modalRef = useRef(null);
-
   useEffect(() => {
     // Fetch airport data when the component mounts
     async function fetchAirports() {
@@ -75,12 +75,17 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
 
   const handleSelectAirport = (selectedAirport) => {
     setInputValue(selectedAirport.airport_name);
+    setSelectedCityCode1(selectedAirport.city_code); // Set the selected city code in state
     setModal(false);
     setFilteredAirports([]);
   };
 
   const handleSelectPopularCity = (cityName) => {
     setInputValue(cityName);
+    // Set the selected city code based on the city name
+    // You may need to adjust this logic based on how city codes are generated or stored in your application
+    const cityCode = cityName.toLowerCase().substring(0, 3); // Example logic: Extract first 3 characters of the city name
+    setSelectedCityCode1(cityCode);
     setModal(false);
     setFilteredAirports([]);
   };
@@ -153,7 +158,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
                       ) : (
                         <FaLocationDot className="text-2xl font-bold" />
                       )}
-                       {airport.city_name} ,{airport.country_name}
+                      {airport.city_name} ,{airport.country_name}
                     </span>
                     <span>{generateShortForm(airport.city_code)}</span>
                   </div>

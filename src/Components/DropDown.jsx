@@ -297,11 +297,7 @@ export default function DropDown() {
             </Select>
           </FormControl>
         </div>
-        <Link to="/flightSearch">
-          <button type="button" className="btn btn-success px-8">
-            Search
-          </button>
-        </Link>
+      
       </div>
     </div>
   );

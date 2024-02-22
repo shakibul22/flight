@@ -1,21 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiCommercialAirplane } from "react-icons/gi";
+import { createContextProvider } from "../Context/Context";
+// import { useDispatch } from "react-redux";
 
 const InputModal = ({ inputValue, setInputValue }) => {
   const [modal, setModal] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
+  const {setSelectedCityCode}=useContext(createContextProvider)
   const modalRef = useRef(null);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     // Fetch airport data when the component mounts
     async function fetchAirports() {
       try {
         const res = await getAllAirports();
-        // console.log(res);
         setAirport(res);
       } catch (error) {
         console.error("Error fetching airport data:", error);
@@ -69,12 +72,16 @@ const InputModal = ({ inputValue, setInputValue }) => {
       setModal(true);
     }
   };
-
   const handleSelectAirport = (selectedAirport) => {
     if (selectedAirport) {
       setInputValue(selectedAirport.airport_name);
+      setSelectedCityCode(selectedAirport.city_code); // Set the selected city code in state
       setModal(false);
-      setFilteredAirports([]); // Clear filtered airports
+      setFilteredAirports([]);
+      // dispatch({
+      //   type: "INPUTMODAL",
+      //   payload: selectedAirport.city_code,
+      // });
     } else {
       setInputValue(""); // Clear input value
     }
@@ -82,6 +89,10 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   const handleSelectPopularCity = (city) => {
     setInputValue(city);
+    // Set the selected city code based on the city name
+    // You may need to adjust this logic based on how city codes are stored in your data
+    const cityCode = city.toLowerCase().substring(0, 3); // Example logic: Extract first 3 characters of the city name
+    setSelectedCityCode(cityCode);
     setModal(false);
     setFilteredAirports([]);
   };
@@ -114,9 +125,9 @@ const InputModal = ({ inputValue, setInputValue }) => {
           <input
             type="text"
             placeholder="From"
-            className={`rounded-sm border   h-14 p-4 pl-8 w-[200px] lg:w-full duration-200 ${
+            className={`rounded-sm border   h-14 p-4 pl-3 w-[200px] lg:w-full duration-200 ${
               modal
-                ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
+                ? "w-full z-20 pl-1 border-4 border-[#e7fddc]"
                 : "w-[27wh] z-0"
             }`}
             value={inputValue}
