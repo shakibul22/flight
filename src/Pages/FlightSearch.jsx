@@ -163,6 +163,7 @@ const FlightSearch = () => {
             </div>
           </div>
           <div className=" w-full px-[300px]">
+            
             {cities.map((city, index) => (
               <div
                 className="multicity flex justify-start gap-2 items-center"

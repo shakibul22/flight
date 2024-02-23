@@ -77,7 +77,7 @@ const FlightTab = () => {
   };
 
   return (
-    <div>
+    <div className="h-60">
       <div role="tablist" className="tabs ">
         <input
           type="radio"
@@ -121,13 +121,7 @@ const FlightTab = () => {
             </div>
           </div>
         </div>
-        <div className="dropdown dropdown-bottom dropdown-end">
-  <div tabIndex={0} role="button" className="btn m-1">Click</div>
-  <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li><a>Item 1</a></li>
-    <li><a>Item 2</a></li>
-  </ul>
-</div>
+
         <input
           type="radio"
           name="my_tabs_1"
@@ -184,6 +178,7 @@ const FlightTab = () => {
         <div role="tabpanel" className="tab-content p-5">
           <Multicity />
         </div>
+        
       </div>
       <div className="flex  justify-evenly">
         <DropDown />{" "}

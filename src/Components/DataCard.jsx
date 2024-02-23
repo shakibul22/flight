@@ -175,7 +175,7 @@ const DataCard = ({ f }) => {
               <tr className="">
                 <th>
                   {flight_group.map((flight) => (
-                    <div key={flight.routes[0].air_segment_key}>
+                    <div key={flight?.routes[1]?.air_segment_key}>
                       {/* Displaying operating carrier logo */}
                       <img
                         className="w-10 h-10 rounded-full"
@@ -200,13 +200,39 @@ const DataCard = ({ f }) => {
                 </td>
                 <td>
                   <div>
-                    <p>{baggage[0].origin}</p>
+                    <p>{baggage[1]?.origin}</p>
+                    <p> {formattedArrivalTime}</p>
+
+                    <div>
+                      {flight_group.map((flight, index) => (
+                        <div key={index}>
+                          <p>
+                            <span className="text-md ">
+                              Terminal- {flight.routes[0]?.origin_terminal}{" "}
+                            </span>
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </td>
                 <td>
                   <div>
-                    <p>{baggage[0].destination} </p>
-                    <p>{baggage[0].destination_terminal}</p>
+                    <p>{baggage[1]?.destination} </p>
+
+                    <p>
+                      {baggage[1]?.destination_terminal}
+                      {formattedDepartureTime}
+                    </p>
+                    {flight_group.map((flight, index) => (
+                      <div key={index}>
+                        <p>
+                          <span className="text-md ">
+                            Terminal- {flight.routes[0]?.destination_terminal}{" "}
+                          </span>
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </td>
                 <td>

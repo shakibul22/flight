@@ -15,24 +15,29 @@ function Filter() {
     filterData(color, minPrice);
   };
 
+  // Function to handle minimum price input
   const handleMinPriceChange = (event) => {
     const p = event.target.value;
     setMinPrice(p);
     filterData(selectedColor, p);
   };
 
+  // Function to filter data based on color and price
   const filterData = (color, price) => {
     let newData = data;
     if (color) {
       newData = newData.filter((flight) => {
- 
-        return true; 
+        // Perform filtering based on color
+        // Modify this logic based on your flight data structure
+        // For example, if color is stored as flight.color
+        // You would check flight.color === color
+        return true; // Placeholder logic, modify as needed
       });
     }
     if (price) {
       newData = newData.filter((flight) => {
    
-        return true; 
+        return true; // Placeholder logic, modify as needed
       });
     }
     setFilteredData(newData);
