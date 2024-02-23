@@ -285,10 +285,9 @@ const FlightSearch = () => {
                 aria-label="Fastest"
               />
               <div role="tabpanel" className="tab-content p-10">
-                {/* Data cards */}
-                {/* {filterData?.map((f) => (
-                  <DataCard key={f._id} f={f} />
-                ))} */}
+              {filterData && filterData.length > 0
+                  ? filterData.map((f) => <DataCard key={f._id} f={f} />)
+                  : data.map((f) => <DataCard key={f._id} f={f} />)}
               </div>
             </div>
           </div>
