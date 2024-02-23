@@ -51,11 +51,11 @@ const DataCard = ({ f }) => {
       {/* {
         filter_data=="cheapest_flight"? <CheapestTab />:""
       } */}
-      <div className="card lg:card-side mb-7 bg-base-100 shadow-xl">
-        <div className="overflow-x-auto  flex flex-row justify-between gap-2">
+      <div className="card lg:card-side hover:border-[#e3b1b3] hover:border-2 mb-7 bg-[#ffffff] shadow-2xl">
+        <div className="overflow-x-auto  flex flex-row justify-between  gap-2">
           <table className="table w-[40vw] ">
             {/* head */}
-            <thead className="bg-gray-300  px-4 py-2 ">
+            <thead className="bg-[#ffffff] px-4 py-2 ">
               <tr>
                 <th>Airline</th>
                 <th>Details</th>
@@ -95,17 +95,39 @@ const DataCard = ({ f }) => {
                 </td>
                 <td>
                   <div>
-                    {/* <p>{baggage[0].origin}</p> */}
+                    <p>{baggage[0].origin}</p>
                     <p> {formattedArrivalTime}</p>
+
+                    <div>
+                      {flight_group.map((flight, index) => (
+                        <div key={index}>
+                          <p>
+                            <span className="text-md ">
+                              Terminal- {flight.routes[0]?.origin_terminal}{" "}
+                            </span>
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </td>
                 <td>
                   <div>
                     <p>{baggage[0].destination} </p>
+
                     <p>
                       {baggage[0].destination_terminal}
                       {formattedDepartureTime}
                     </p>
+                    {flight_group.map((flight, index) => (
+                      <div key={index}>
+                        <p>
+                          <span className="text-md ">
+                            Terminal- {flight.routes[0]?.destination_terminal}{" "}
+                          </span>
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </td>
                 <td>
@@ -115,31 +137,34 @@ const DataCard = ({ f }) => {
                     </div>
                   ))}
                 </td>
+
                 <td>
                   {flight_group.map((flight, index) => (
                     <div key={index}>
-                      <p> {flight.flight_time.substring(2)}</p>
+                      {flight.routes[0].baggages?.checked?.ADT?.title}
+                    </div>
+                  ))}
+                  for{" "}
+                  {flight_group.map((flight, index) => (
+                    <div key={index}>
+                      {flight.routes[0].baggages?.checked?.ADT?.passenger_type}
                     </div>
                   ))}
                 </td>
               </tr>
 
-              <tr className="bg-gray-100">
+              <tr className="bg-[#f8e9ea]">
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
                   {flight_group.map((flightGroup, index) => (
                     <div key={index}>
-                      {flightGroup.routes.map((route, index) => (
-                        <div key={index}>
-                          {/* Display transit time if available */}
-                          {route.transit_time && (
-                            <p>Transit Time: {route.transit_time}</p>
-                          )}
-                        </div>
-                      ))}
-                      {/* Add more flight group details if necessary */}
+                      {flightGroup.transit_time !== null ? (
+                        <p>Transit Time: {flightGroup.transit_time}</p>
+                      ) : (
+                        <p>No transit time available</p>
+                      )}
                     </div>
                   ))}
                 </td>
@@ -191,10 +216,17 @@ const DataCard = ({ f }) => {
                     </div>
                   ))}
                 </td>
+
                 <td>
                   {flight_group.map((flight, index) => (
                     <div key={index}>
-                      <p> {flight.flight_time.substring(2)}</p>
+                      {flight.routes[1]?.baggages?.checked?.ADT?.title}
+                    </div>
+                  ))}
+                  for{" "}
+                  {flight_group.map((flight, index) => (
+                    <div key={index}>
+                      {flight.routes[1]?.baggages?.checked?.ADT?.passenger_type}
                     </div>
                   ))}
                 </td>

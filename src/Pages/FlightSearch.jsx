@@ -90,7 +90,7 @@ const FlightSearch = () => {
   return (
     <div>
       <div className="pt-16 px-[220px]  ">
-        <div className="shadow-xl h-[30vh] p-9">
+        <div className="shadow-xl h-auto p-9">
           <div className="  flex px-16 justify-evenly items-center gap-4 ">
             <button className="flex  justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl">
               <FaRegArrowAltCircleRight className="text-white" />
