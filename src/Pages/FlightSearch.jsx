@@ -16,11 +16,17 @@ import { FaSearchengin } from "react-icons/fa6";
 
 const FlightSearch = () => {
   const [activeTab, setActiveTab] = useState("oneWay"); 
-  const { data } = useContext(createContextProvider);
-  const { travelClass, setTravelClass, selectedBaggages ,selectedAirlines,priceFilter} = useContext(
-    createContextProvider
-  );
+  const { data ,setData} = useContext(createContextProvider);
+  const { travelClass, setTravelClass, selectedBaggages ,selectedAirlines,priceFilter,  selectedCityCode,
+    returnPlaceholder, selectedCityCode1,  departurePlaceholder,} = useContext( createContextProvider);
   const [filterData, setFilteredData] = useState(data);
+  const [selectedDateRange, setSelectedDateRange] = useState("");
+
+
+
+
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
   const handleTravelClassChange = (event) => {
     setTravelClass(event.target.value);
   };
@@ -45,12 +51,12 @@ const FlightSearch = () => {
     }
   }, [selectedBaggages, data]);
   
-  useEffect(() => {
-    const filtered = data.filter((flight) =>
-      priceFilter ? flight.filter.price <= parseFloat(priceFilter) : true
-    );
-    setFilteredData(filtered);
-  }, [priceFilter, data]);
+  // useEffect(() => {
+  //   const filtered = data.filter((flight) =>
+  //     priceFilter ? flight.filter.price <= parseFloat(priceFilter) : true
+  //   );
+  //   setFilteredData(filtered);
+  // }, [priceFilter, data]);
 
   // useEffect(() => {
   //   const filtered = data.filter((flight) =>
@@ -63,18 +69,7 @@ const FlightSearch = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  const [selectedDateRange, setSelectedDateRange] = useState("");
-  const {
-    selectedCityCode,
-    returnPlaceholder,
-    selectedCityCode1,
-    departurePlaceholder,
-  } = useContext(createContextProvider);
 
-  const { setData } = useContext(createContextProvider);
-
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
 
   const handleSwap = () => {
     if (input1 && input2) {
@@ -260,35 +255,38 @@ const FlightSearch = () => {
           {/* Data display */}
           <div className="w-full py-4 px-4 shadow-2xl h-screen overflow-y-auto">
             <div role="tablist" className="tabs tabs-bordered p-10">
-              {/* Tab for Cheapest */}
-              <input
-                type="radio"
-                name="my_tabs_1"
-                role="tab"
-                className="tab text-2xl font-bold mb-10 ml-[350px]"
-                aria-label="Cheapest"
-                checked
-              />
-              <div role="tabpanel" className="tab-content">
-                {/* Data cards */}
-                {filterData && filterData.length > 0
-                  ? filterData.map((f) => <DataCard key={f._id} f={f} />)
-                  : data.map((f) => <DataCard key={f._id} f={f} />)}
-              </div>
+           
+<input
+  type="radio"
+  name="my_tabs_1"
+  role="tab"
+  className="tab text-2xl font-bold mb-10 ml-[350px]"
+  aria-label="Cheapest"
+  checked
+/>
+<div role="tabpanel" className="tab-content">
 
-              {/* Tab for Fastest */}
-              <input
-                type="radio"
-                name="my_tabs_1"
-                role="tab"
-                className="tab text-2xl mb-10 font-bold"
-                aria-label="Fastest"
-              />
-              <div role="tabpanel" className="tab-content p-10">
-              {filterData && filterData.length > 0
-                  ? filterData.map((f) => <DataCard key={f._id} f={f} />)
-                  : data.map((f) => <DataCard key={f._id} f={f} />)}
-              </div>
+  {filterData && filterData.length > 0
+    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+    : data?.map((f) => <DataCard key={f._id} f={f} />)}
+</div>
+
+<input
+  type="radio"
+  name="my_tabs_2" 
+  role="tab"
+  className="tab text-2xl mb-10 font-bold"
+  aria-label="Fastest"
+/>
+
+
+<div role="tabpane2" className="tab-content p-10">
+
+  {filterData && filterData.length > 0
+    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+    : data?.map((f) => <DataCard key={f._id} f={f} />)}
+</div>
+
             </div>
           </div>
         </div>
