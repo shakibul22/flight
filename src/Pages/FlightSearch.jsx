@@ -17,14 +17,14 @@ import { FaSearchengin } from "react-icons/fa6";
 const FlightSearch = () => {
   const [activeTab, setActiveTab] = useState("oneWay"); 
   const { data } = useContext(createContextProvider);
-  const { travelClass, setTravelClass, selectedBaggages } = useContext(
+  const { travelClass, setTravelClass, selectedBaggages ,selectedAirlines,priceFilter} = useContext(
     createContextProvider
   );
   const [filterData, setFilteredData] = useState(data);
   const handleTravelClassChange = (event) => {
     setTravelClass(event.target.value);
   };
-  console.log(selectedBaggages);
+  console.log(selectedAirlines);
 
 
   useEffect(() => {
@@ -45,7 +45,21 @@ const FlightSearch = () => {
     }
   }, [selectedBaggages, data]);
   
+  useEffect(() => {
+    const filtered = data.filter((flight) =>
+      priceFilter ? flight.filter.price <= parseFloat(priceFilter) : true
+    );
+    setFilteredData(filtered);
+  }, [priceFilter, data]);
 
+  // useEffect(() => {
+  //   const filtered = data.filter((flight) =>
+  //     flight.flight_group.some((segment) =>
+  //       selectedAirlines[segment?.airline_name]
+  //     )
+  //   );
+  //   setFilteredData(filtered);
+  // }, [selectedAirlines, data]);
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };

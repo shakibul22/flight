@@ -10,14 +10,15 @@ const Context = ({ children }) => {
   const [returnPlaceholder, setReturnPlaceholder] = useState("Return");
   const [travelClass, setTravelClass] = useState("Economy"); // Default value is 'Economy'
   const [selectedBaggages, setSelectedBaggages] = useState(null); 
-
+  const [selectedAirlines, setSelectedAirlines] = useState({});
+  const [priceFilter, setPriceFilter] = useState(""); 
   const info = {
     selectedCityCode,
     selectedCityCode1,
     setSelectedCityCode1,
     setSelectedCityCode,
     setData,departurePlaceholder, setDeparturePlaceholder,
-    data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass,selectedBaggages, setSelectedBaggages
+    data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass,selectedBaggages, setSelectedBaggages,selectedAirlines, setSelectedAirlines,priceFilter, setPriceFilter
   };
 
   return (
