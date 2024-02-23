@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
     <>
-      <div className=" ">
+      <div className="bg-gray-200 ">
         <div className="grid grid-cols-2  justify-between gap-[5vh] lg:gap-[85vh] py-3 px-3 lg:px-[380px] ">
           <img
             className="w-70 h-14"

@@ -1,216 +1,268 @@
-import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import { BsArrowRepeat } from "react-icons/bs";
-import { TbArrowRampRight } from "react-icons/tb";
-import { MdOutlineArrowDropDown, MdSwapHoriz } from "react-icons/md";
-import Passenger from "../Components/Passenger";
-import InputModal from "../Components/InputModal";
-import ToInputModal from "../Components/ToInputModal";
-import Deparature from "../Components/Deparature";
 import { useContext, useEffect, useState } from "react";
 import Filter from "../Components/Filter";
-import { getAllOneWay } from "../Actions/airport";
 import DataCard from "../Components/DataCard";
-
+import ToInputModal from "../Components/ToInputModal";
+import DatePickers from "../Components/DatePicker";
+import { MdSwapHoriz } from "react-icons/md";
+import InputModal from "../Components/InputModal";
+import { getAllOneWay } from "../Actions/airport";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { createContextProvider } from "../Context/Context";
+import Multicity from "../Components/Multicity";
+import { FaSearchengin } from "react-icons/fa6";
 
 const FlightSearch = () => {
-  // const [oneWay, setOneWay] = useState([]);
-  const [cities, setCities] = useState([{ input1: "", input2: "" }]);
+  const [activeTab, setActiveTab] = useState("oneWay"); 
   const { data } = useContext(createContextProvider);
-  // const input = useDispatch();
-  // const { inputs } = useSelector((state) => state);
-
-  // useEffect(() => {
-  //   handleOnWay();
-  // }, []);
-
-  // const handleOnWay = async () => {
-  //   try {
-  //     const res = await getAllOneWay();
-  //     setOneWay(res.data);
-  //   } catch (error) {
-  //     console.error("Error handling one-way search:", error);
-  //   }
-  // };
-
-  const addFlight = () => {
-    setCities([...cities, { input1: "", input2: "" }]);
+  const { travelClass, setTravelClass, selectedBaggages } = useContext(
+    createContextProvider
+  );
+  const [filterData, setFilteredData] = useState(data);
+  const handleTravelClassChange = (event) => {
+    setTravelClass(event.target.value);
   };
+  console.log(selectedBaggages);
 
-  const removeFlight = (index) => {
-    const newCities = [...cities];
-    newCities.splice(index, 1);
-    setCities(newCities);
+
+  useEffect(() => {
+
+    if (selectedBaggages && selectedBaggages.length > 0) {
+  
+      const filtered = data.filter((flight) =>
+        flight.flight_group.some(
+          (segment) =>
+            segment?.routes[0]?.baggages?.checked?.ADT?.title === selectedBaggages
+        )
+      );
+ 
+      setFilteredData(filtered);
+    } else {
+    
+      setFilteredData(data);
+    }
+  }, [selectedBaggages, data]);
+  
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
   };
+  const [selectedDateRange, setSelectedDateRange] = useState("");
+  const {
+    selectedCityCode,
+    returnPlaceholder,
+    selectedCityCode1,
+    departurePlaceholder,
+  } = useContext(createContextProvider);
 
-  const handleSwap = (index) => {
-    const newCities = [...cities];
-    const temp = newCities[index].input1;
-    newCities[index].input1 = newCities[index].input2;
-    newCities[index].input2 = temp;
-    setCities(newCities);
+  const { setData } = useContext(createContextProvider);
+
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+
+  const handleSwap = () => {
+    if (input1 && input2) {
+      const temp = input1;
+      setInput1(input2);
+      setInput2(temp);
+    }
   };
+  const handleSearch = async () => {
+    const data = {
+      journey_type: { activeTab },
+      segment: [
+        {
+          departure_airport_type: "AIRPORT",
+          departure_airport: selectedCityCode,
+          arrival_airport_type: "AIRPORT",
+          arrival_airport: selectedCityCode1,
+          departure_date: departurePlaceholder,
+        },
+      ],
+      travelers_adult: 1,
+      travelers_child: 0,
+      travelers_child_age: 0,
+      travelers_infants: 0,
+      travelers_infants_age: [""],
+      preferred_carrier: [null],
+      non_stop_flight: "any",
+      baggage_option: "any",
+      booking_class: travelClass,
+      supplier_uid: "all",
+      partner_id: "",
+      language: "en",
+    };
+    try {
+      const res = await getAllOneWay(data);
 
-  const handleInputChange = (index, inputType, value) => {
-    const newCities = [...cities];
-    newCities[index][inputType] = value;
-    setCities(newCities);
-   
+      setData(res.data);
+    } catch (error) {
+      console.error("Error handling one-way search:", error);
+    }
   };
-
-
   return (
     <div>
-      <div className="pt-16 px-[220px]  ">
+      <div className="pt-16 px-[220px]">
         <div className="shadow-xl h-auto p-9">
-          <div className="  flex px-16 justify-evenly items-center gap-4 ">
-            <button className="flex  justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl">
-              <FaRegArrowAltCircleRight className="text-white" />
-              <span className="text-red-800"> One-way</span>
+          {/* Tabs for One Way, Round Trip, and Multi-City */}
+          <div className="flex justify-start items-center gap-2 ml-16">
+            <button
+              className={`flex justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl ${
+                activeTab === "oneWay" ? "bg-green-400" : ""
+              }`}
+              onClick={() => handleTabChange("oneWay")}
+            >
+              One-way
             </button>
-            <button className="flex  justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl">
-              <BsArrowRepeat className="text-white" />
-              <span className="text-red-800"> Round-Trip</span>
+            <button
+              className={`flex justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl ${
+                activeTab === "roundTrip" ? "bg-green-400" : ""
+              }`}
+              onClick={() => handleTabChange("roundTrip")}
+            >
+              Round-Trip
             </button>
-            <button className="flex  justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl">
-              <TbArrowRampRight className="text-white" />
-              <span className="text-red-800"> Multi-city</span>
+            <button
+              className={`flex justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl ${
+                activeTab === "multiCity" ? "bg-green-400" : ""
+              }`}
+              onClick={() => handleTabChange("multiCity")}
+            >
+              Multi-city
             </button>
-            <div className="dropdown">
-              <div tabIndex={0} role="button" className="flex  m-1">
-                Any Flight <MdOutlineArrowDropDown className="ml-2 text-xl" />
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a>All Right</a>
-                </li>
-                <li>
-                  <a>Non-stop</a>
-                </li>
-              </ul>
-            </div>
-            <div className="dropdown">
-              <div tabIndex={0} role="button" className="flex  m-1">
-                Any Baggage <MdOutlineArrowDropDown className="ml-2 text-xl" />
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a>Any Baggage</a>
-                </li>
-                <li>
-                  <a>With Baggage</a>
-                </li>
-              </ul>
-            </div>
             <div>
-              <Passenger />
-            </div>
-            <div className="dropdown">
-              <div tabIndex={0} role="button" className="flex  m-1">
-                Economy <MdOutlineArrowDropDown className="ml-2 text-xl" />
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100w-52"
-              >
-                <li>
-                  <a>Economy</a>
-                </li>
-                <li>
-                  <a>Premium Economy</a>
-                </li>
-                <li>
-                  <a>Business Class</a>
-                </li>
-                <li>
-                  <a>First Class</a>
-                </li>
-              </ul>
+              <FormControl sx={{ m: 1, minWidth: 180 }}>
+                <Select
+                  autoWidth
+                  variant="standard"
+                  value={travelClass} // Controlled component
+                  onChange={handleTravelClassChange} // Event handler
+                >
+                  {/* Add an empty option to allow removing the selection */}
+                  <MenuItem defaultValue="Travel Class">Travel Class</MenuItem>
+                  <MenuItem value="Economy">Economy</MenuItem>
+                  <MenuItem value="Premium-Economy">Premium Economy</MenuItem>
+                  <MenuItem value="Business">Business Class</MenuItem>
+                  <MenuItem value="First-Class">First Class</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           </div>
-          <div className=" w-full px-[300px]">
-            
-            {cities.map((city, index) => (
-              <div
-                className="multicity flex justify-start gap-2 items-center"
-                key={index}
-              >
+
+          {/* Content based on the active tab */}
+          {activeTab === "oneWay" && (
+            // Content for One Way
+            <div className="px-[250px] mt-5">
+              <div className="flex justify-start gap-4 items-center">
                 <div className="w-full relative mr-2">
-                  <InputModal
-                    inputValue={city.input1}
-                    setInputValue={(value) =>
-                      handleInputChange(index, "input1", value)
-                    }
-                  />
+                  <InputModal inputValue={input1} setInputValue={setInput1} />
                 </div>
                 <button
-                  onClick={() => handleSwap(index)}
-                  className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[150px]  2xl:translate-x-[222px]   overflow-auto rounded-full border-white border-4 ${
-                    city.input1 && city.input2 ? "bg-green-400" : "bg-gray-200 "
-                  }`}
-                  disabled={!city.input1 || !city.input2}
+                  onClick={handleSwap}
+                  className={`${
+                    input1 && input2
+                      ? "bg-green-500"
+                      : "bg-gray-300 cursor-not-allowed"
+                  } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[198px] mt-2 overflow-auto rounded-full border-gray-400 border-4`}
+                  disabled={!input1 || !input2}
                 >
-                  <MdSwapHoriz className="text-xs   text-gray-950 w-10 h-10  " />{" "}
+                  <MdSwapHoriz className="text-xs  text-gray-950 w-10 h-10" />
                 </button>
+
                 {/* Arrow button */}
                 <div className="w-full relative">
-                  <ToInputModal
-                    inputValue={city.input2}
-                    setInputValue={(value) =>
-                      handleInputChange(index, "input2", value)
-                    }
-                  />
+                  {" "}
+                  <ToInputModal inputValue={input2} setInputValue={setInput2} />
                 </div>
                 <div className="w-full">
-                  <Deparature />
+                  <DatePickers
+                    selectedDateRange={selectedDateRange}
+                    setSelectedDateRange={setSelectedDateRange}
+                  />
                 </div>
-                {cities.length > 2 && (
-                  <button
-                    type="button"
-                    className="btn btn-circle"
-                    onClick={() => removeFlight(index)}
-                  >
-                    X
-                  </button>
-                )}
               </div>
-            ))}
+            </div>
+          )}
+          {activeTab === "roundTrip" && (
+            // Content for Round Trip
+            <div className="px-[250px] mt-5">
+              <div className="flex justify-start gap-4 items-center">
+                <div className="w-full relative mr-2">
+                  <InputModal inputValue={input1} setInputValue={setInput1} />
+                </div>
+                <button
+                  onClick={handleSwap}
+                  className={`${
+                    input1 && input2
+                      ? "bg-green-500"
+                      : "bg-gray-300 cursor-not-allowed"
+                  } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[198px] mt-2 overflow-auto rounded-full border-gray-400 border-4`}
+                  disabled={!input1 || !input2}
+                >
+                  <MdSwapHoriz className="text-xs  text-gray-950 w-10 h-10" />
+                </button>
+
+                {/* Arrow button */}
+                <div className="w-full relative">
+                  {" "}
+                  <ToInputModal inputValue={input2} setInputValue={setInput2} />
+                </div>
+                <div className="w-full">
+                  <DatePickers
+                    selectedDateRange={selectedDateRange}
+                    setSelectedDateRange={setSelectedDateRange}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === "multiCity" && (
+            // Content for Multi-City
+            <div className="flex justify-center items-center mt-5">
+              <Multicity />
+            </div>
+          )}
+
+          {/* Additional content */}
+          <div className="max-w-xl mx-auto transform translate-y-12 px-[300px]">
             <button
+              onClick={handleSearch}
               type="button"
-              className="transform translate-x-12 absolute top-60 bg-green-400 px-3 py-2 border-2 rounded-md  right-72"
-              onClick={addFlight}
+              className=" bg-[#bb2a2f] flex flex-row py-3 text-white justify-evenly gap-2 rounded items-center px-8 mt-7 "
             >
-              + Add Flight
+              <FaSearchengin />
+              <span> Search</span>
             </button>
           </div>
         </div>
 
         <div className="flex flex-row gap-7 my-5">
-          <div className="w-[35vh] ">
+          {/* Filter component */}
+          <div className="w-[35vh]">
             <Filter />
           </div>
-          <div className="w-full  py-4 px-4 shadow-2xl  h-screen overflow-y-auto ">
+          {/* Data display */}
+          <div className="w-full py-4 px-4 shadow-2xl h-screen overflow-y-auto">
             <div role="tablist" className="tabs tabs-bordered p-10">
+              {/* Tab for Cheapest */}
               <input
                 type="radio"
                 name="my_tabs_1"
                 role="tab"
-                className="tab text-2xl font-bold mb-10  ml-[350px]"
+                className="tab text-2xl font-bold mb-10 ml-[350px]"
                 aria-label="Cheapest"
                 checked
               />
-              <div role="tabpanel" className="tab-content ">
-                {data?.map((f) => (
-                  <DataCard key={f._id} f={f} />
-                ))}
+              <div role="tabpanel" className="tab-content">
+                {/* Data cards */}
+                {filterData && filterData.length > 0
+                  ? filterData.map((f) => <DataCard key={f._id} f={f} />)
+                  : data.map((f) => <DataCard key={f._id} f={f} />)}
               </div>
 
+              {/* Tab for Fastest */}
               <input
                 type="radio"
                 name="my_tabs_1"
@@ -219,9 +271,10 @@ const FlightSearch = () => {
                 aria-label="Fastest"
               />
               <div role="tabpanel" className="tab-content p-10">
-                {data?.map((f) => (
+                {/* Data cards */}
+                {/* {filterData?.map((f) => (
                   <DataCard key={f._id} f={f} />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

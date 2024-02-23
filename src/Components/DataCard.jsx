@@ -27,7 +27,7 @@ const DataCard = ({ f }) => {
     destination_reach_time,
     destination_reach_timestamp,
   } = f;
-  console.log(f);
+
   const departureDepartureTime = new Date(filter.departure_departure_time);
   const formattedDepartureTime = departureDepartureTime.toLocaleDateString(
     "en-US",
@@ -46,7 +46,7 @@ const DataCard = ({ f }) => {
       year: "numeric",
     }
   );
-  console.log(tracking_id);
+
   return (
     <div>
       {/* {

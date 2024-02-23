@@ -9,6 +9,7 @@ const Context = ({ children }) => {
   const [departurePlaceholder, setDeparturePlaceholder] = useState("Departure");
   const [returnPlaceholder, setReturnPlaceholder] = useState("Return");
   const [travelClass, setTravelClass] = useState("Economy"); // Default value is 'Economy'
+  const [selectedBaggages, setSelectedBaggages] = useState(null); 
 
   const info = {
     selectedCityCode,
@@ -16,7 +17,7 @@ const Context = ({ children }) => {
     setSelectedCityCode1,
     setSelectedCityCode,
     setData,departurePlaceholder, setDeparturePlaceholder,
-    data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass
+    data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass,selectedBaggages, setSelectedBaggages
   };
 
   return (
