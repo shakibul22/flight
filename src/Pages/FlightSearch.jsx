@@ -55,38 +55,10 @@ const FlightSearch = () => {
     const newCities = [...cities];
     newCities[index][inputType] = value;
     setCities(newCities);
-    // Call search function here passing the updated cities
-    // search(newCities);
+   
   };
 
-  // Implement your search function here
-  const search = (cities) => {
-    // Perform search based on the cities input
-    // You can make an API call here passing the cities data
-  };
 
-  console.log(data);
-  // const handleRoundTrip = async () => {
-  //   try {
-  //     const res = await getRoundTrip(); // Await the Promise
-  //     setOneWay(res.data); // Use res directly, it's already the response data
-  //     // Handle the response data as needed
-  //   } catch (error) {
-  //     console.error("Error handling one-way search:", error);
-  //     // Handle the error,
-  //   }
-  // };
-  // const handleMulticity = async () => {
-  //   try {
-  //     const res = await getMulticity(); // Await the Promise
-  //     setOneWay(res.data); // Use res directly, it's already the response data
-  //     // Handle the response data as needed
-  //   } catch (error) {
-  //     console.error("Error handling one-way search:", error);
-  //     // Handle the error,
-  //   }
-  // };
-  // Example usage:
   return (
     <div>
       <div className="pt-16 px-[220px]  ">

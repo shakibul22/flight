@@ -15,7 +15,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    // Fetch airport data when the component mounts
+
     async function fetchAirports() {
       try {
         const res = await getAllAirports();
@@ -25,7 +25,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
       }
     }
     fetchAirports();
-  }, []); // Empty dependency array to ensure useEffect runs only once
+  }, []); 
 
   useEffect(() => {
     // Filter airports based on input value
@@ -54,7 +54,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
   }, []);
 
   const handleClearInput = () => {
-    setInputValue(""); // Clear the input by setting it to an empty string
+    setInputValue(""); 
   };
 
   const handleFocus = () => {
@@ -68,14 +68,14 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   const handleKeyDown = (e) => {
     if (e.key !== "Backspace") {
-      // Show modal when user inputs something from the keyboard
+   
       setModal(true);
     }
   };
   const handleSelectAirport = (selectedAirport) => {
     if (selectedAirport) {
       setInputValue(selectedAirport.airport_name);
-      setSelectedCityCode(selectedAirport.city_code); // Set the selected city code in state
+      setSelectedCityCode(selectedAirport.city_code);
       setModal(false);
       setFilteredAirports([]);
       // dispatch({
@@ -83,21 +83,20 @@ const InputModal = ({ inputValue, setInputValue }) => {
       //   payload: selectedAirport.city_code,
       // });
     } else {
-      setInputValue(""); // Clear input value
+      setInputValue("");
     }
   };
 
   const handleSelectPopularCity = (city) => {
     setInputValue(city);
-    // Set the selected city code based on the city name
-    // You may need to adjust this logic based on how city codes are stored in your data
-    const cityCode = city.toLowerCase().substring(0, 3); // Example logic: Extract first 3 characters of the city name
+
+    const cityCode = city.toLowerCase().substring(0, 3); 
     setSelectedCityCode(cityCode);
     setModal(false);
     setFilteredAirports([]);
   };
 
-  // Function to generate short form for airport name within 3 characters
+
   function generateShortForm(airportName) {
     const words = airportName.split(" ");
     let shortForm = "";
@@ -133,7 +132,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            onKeyDown={handleKeyDown} // Listen for keyboard input
+            onKeyDown={handleKeyDown} 
           />
           {modal && inputValue && (
             <MdClose
@@ -148,7 +147,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
           }`}
         >
           <div>
-            {/* Render filtered airports */}
+  
             <div>
               {filteredAirports.slice(0, 10).map((airport) => (
                 <div
@@ -173,7 +172,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
               ))}
             </div>
 
-            {/* Show popular cities if filteredAirports is empty */}
+
             {filteredAirports.length === 0 && (
               <div>
                 <h3 className="font-medium mb-4">Popular Cities</h3>

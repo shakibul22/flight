@@ -6,9 +6,7 @@ import { createContextProvider } from "../Context/Context";
 export default function DatePickers() {
   const [startDate, setStartDate] = useState(new Date("2024-05-20"));
   const [returnDate, setReturnDate] = useState(null);
-  const { setDeparturePlaceholder, setReturnPlaceholder } = useContext(
-    createContextProvider
-  );
+  const {setDeparturePlaceholder, setReturnPlaceholder } = useContext(createContextProvider);
 
   const formatDate = (date) => {
     const year = date.getFullYear();

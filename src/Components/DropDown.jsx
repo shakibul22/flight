@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useContext, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 import { IoWomanOutline } from "react-icons/io5";
 import { IoMan } from "react-icons/io5";
 import { FaBaby } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { createContextProvider } from "../Context/Context";
+
 export default function DropDown() {
   const [selectedPaymentTypes, setSelectedPaymentTypes] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,11 @@ export default function DropDown() {
   });
   const [passengerLabel, setPassengerLabel] = useState("Passengers");
   const [isApplyClicked, setIsApplyClicked] = useState(false); // State to track if apply button is clicked
+  const { travelClass, setTravelClass } = useContext(createContextProvider);
 
+  const handleTravelClassChange = (event) => {
+    setTravelClass(event.target.value);
+  };
   const handleIncrement = (type) => {
     setPassengerCounts((prevCounts) => ({
       ...prevCounts,
@@ -237,10 +242,15 @@ export default function DropDown() {
               autoWidth
               label="Travel Class"
               variant="standard"
+              value={travelClass} // Controlled component
+              onChange={handleTravelClassChange} // Event handler
             >
-              <MenuItem value={10}>Premium Economy</MenuItem>
-              <MenuItem value={21}>Business Class</MenuItem>
-              <MenuItem value={22}>First Class</MenuItem>
+              {/* Add an empty option to allow removing the selection */}
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="Economy">Economy</MenuItem>
+              <MenuItem value="Premium-Economy">Premium Economy</MenuItem>
+              <MenuItem value="Business">Business Class</MenuItem>
+              <MenuItem value="First-Class">First Class</MenuItem>
             </Select>
           </FormControl>
         </div>

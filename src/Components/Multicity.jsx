@@ -5,7 +5,6 @@ import ToInputModal from "./ToInputModal"; // Assuming ToInputModal is a compone
 import { MdSwapHoriz } from "react-icons/md"; // Assuming MdSwapHoriz is imported from react-icons library
 import Deparature from "./Deparature";
 
-
 const Multicity = () => {
   const [cities, setCities] = useState([
     { input1: "", input2: "" },
@@ -37,13 +36,13 @@ const Multicity = () => {
   };
 
   return (
-    <div className=" w-[90vh]">
+    <div className=" w-[80vh]">
       {cities.map((city, index) => (
         <div
-          className="multicity flex justify-start gap-2 items-center"
+          className="multicity flex justify-start gap-1 items-center"
           key={index}
         >
-          <div className="w-full relative mr-2">
+          <div className="w-full relative mr-1">
             <InputModal
               inputValue={city.input1}
               setInputValue={(value) =>
@@ -53,7 +52,7 @@ const Multicity = () => {
           </div>
           <button
             onClick={() => handleSwap(index)}
-            className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[150px]  2xl:translate-x-[222px]   overflow-auto rounded-full border-white border-4 ${
+            className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[210px] mt-2   overflow-auto rounded-full border-white border-4 ${
               city.input1 && city.input2 ? "bg-green-400" : "bg-gray-200 "
             }`}
             disabled={!city.input1 || !city.input2}

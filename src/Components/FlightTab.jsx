@@ -18,11 +18,11 @@ const FlightTab = () => {
     selectedCityCode,
     returnPlaceholder,
     selectedCityCode1,
-    departurePlaceholder,
+    departurePlaceholder,travelClass,
   } = useContext(createContextProvider);
 
   const { setData } = useContext(createContextProvider);
-  const history = useNavigate();
+
 
   const [activeTab, setActiveTab] = useState("OneWay"); // Set default active tab
   const handleTabChange = (tabName) => {
@@ -58,7 +58,7 @@ const FlightTab = () => {
       preferred_carrier: [null],
       non_stop_flight: "any",
       baggage_option: "any",
-      booking_class: "Economy",
+      booking_class: travelClass,
       supplier_uid: "all",
       partner_id: "",
       language: "en",
@@ -67,10 +67,7 @@ const FlightTab = () => {
       const res = await getAllOneWay(data);
 
       setData(res.data);
-      history({
-        pathname: "/flightSearch",
-        state: { searchData: res.data },
-      });
+    
     } catch (error) {
       console.error("Error handling one-way search:", error);
     }
@@ -146,7 +143,7 @@ const FlightTab = () => {
                 input1 && input2
                   ? "bg-green-500"
                   : "bg-gray-300 cursor-not-allowed"
-              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[220px] overflow-auto 
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[207px] overflow-auto 
               rounded-full border-2 border-black translate-y-1 h-15 w-15 `}
               disabled={!input1 || !input2}
             >
@@ -178,7 +175,6 @@ const FlightTab = () => {
         <div role="tabpanel" className="tab-content p-5">
           <Multicity />
         </div>
-        
       </div>
       <div className="flex  justify-evenly">
         <DropDown />{" "}

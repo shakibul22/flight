@@ -8,13 +8,15 @@ const Context = ({ children }) => {
   const [data, setData] = useState([]); // Initialize the data state here
   const [departurePlaceholder, setDeparturePlaceholder] = useState("Departure");
   const [returnPlaceholder, setReturnPlaceholder] = useState("Return");
+  const [travelClass, setTravelClass] = useState("Economy"); // Default value is 'Economy'
+
   const info = {
     selectedCityCode,
     selectedCityCode1,
     setSelectedCityCode1,
     setSelectedCityCode,
     setData,departurePlaceholder, setDeparturePlaceholder,
-    data ,returnPlaceholder, setReturnPlaceholder
+    data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass
   };
 
   return (
