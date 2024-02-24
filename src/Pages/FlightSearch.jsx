@@ -36,54 +36,52 @@ const FlightSearch = () => {
   const handleTravelClassChange = (event) => {
     setTravelClass(event.target.value);
   };
-  useEffect(() => {
-    if (priceFilter) {
-      const filtered = data.filter(
-        (flight) => Math.floor(flight.total_price) === priceFilter
-      );
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(data);
-    }
-  }, [priceFilter, data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     // Only filter data if it's not undefined
+  //     const filtered = data.filter(
+  //       (flight) => Math.floor(flight.total_price) === priceFilter
+  //     );
+  //     setFilteredData(filtered);
+  //   }
+  // }, [priceFilter, data]);
+  
+useEffect(() => {
+  let filtered = data;
 
-  useEffect(() => {
-    if (selectedBaggages && selectedBaggages.length > 0) {
-      const filtered = data.filter((flight) =>
-        flight.flight_group.some(
-          (segment) =>
-            segment?.routes[0]?.baggages?.checked?.ADT?.title ===
-            selectedBaggages
-        )
-      );
+  // Filter based on selected baggages
+  if (selectedBaggages && selectedBaggages.length > 0) {
+    filtered = filtered.filter((flight) =>
+      flight.flight_group.some(
+        (segment) =>
+          segment?.routes[0]?.baggages?.checked?.ADT?.title ===
+          selectedBaggages
+      )
+    );
+  }
 
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(data);
-    }
-  }, [selectedBaggages, data]);
+  // Filter based on stops
+  if (stop && stop.length > 0) {
+    filtered = filtered.filter((flight) =>
+      flight.flight_group.some((segment) =>
+        stop.includes(segment.no_of_stops_title)
+      )
+    );
+  }
 
-  useEffect(() => {
-    if (stop && stop.length > 0) {
-      const filtered = data.filter((flight) =>
-        flight.flight_group.some((segment) =>
-          stop.includes(segment.no_of_stops_title)
-        )
-      );
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(data);
-    }
-  }, [stop, data]);
-
-  useEffect(() => {
-    const filtered = data.filter((flight) =>
+  // Filter based on selected airlines
+  if (selectedAirlines && Object.keys(selectedAirlines).length > 0) {
+    filtered = filtered.filter((flight) =>
       flight.flight_group.some(
         (segment) => selectedAirlines[segment?.airline_name]
       )
     );
-    setFilteredData(filtered);
-  }, [selectedAirlines, data]);
+  }
+
+  // Update the filtered data state
+  setFilteredData(filtered);
+}, [selectedBaggages, stop, selectedAirlines, data]);
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
