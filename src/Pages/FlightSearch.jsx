@@ -15,61 +15,78 @@ import Multicity from "../Components/Multicity";
 import { FaSearchengin } from "react-icons/fa6";
 
 const FlightSearch = () => {
-  const [activeTab, setActiveTab] = useState("oneWay"); 
-  const { data ,setData} = useContext(createContextProvider);
-  const { travelClass, setTravelClass, selectedBaggages ,selectedAirlines,priceFilter,  selectedCityCode,
-    returnPlaceholder, selectedCityCode1,  departurePlaceholder,} = useContext( createContextProvider);
+  const [activeTab, setActiveTab] = useState("oneWay");
+  const { data, setData } = useContext(createContextProvider);
+  const {
+    travelClass,
+    setTravelClass,
+    selectedBaggages,
+    selectedAirlines,
+    priceFilter,
+    stop,
+    selectedCityCode,
+    returnPlaceholder,
+    selectedCityCode1,
+    departurePlaceholder,
+  } = useContext(createContextProvider);
   const [filterData, setFilteredData] = useState(data);
   const [selectedDateRange, setSelectedDateRange] = useState("");
-
-
-
-
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const handleTravelClassChange = (event) => {
     setTravelClass(event.target.value);
   };
-  console.log(selectedAirlines);
-
+  useEffect(() => {
+    if (priceFilter) {
+      const filtered = data.filter(
+        (flight) => Math.floor(flight.total_price) === priceFilter
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [priceFilter, data]);
 
   useEffect(() => {
-
     if (selectedBaggages && selectedBaggages.length > 0) {
-  
       const filtered = data.filter((flight) =>
         flight.flight_group.some(
           (segment) =>
-            segment?.routes[0]?.baggages?.checked?.ADT?.title === selectedBaggages
+            segment?.routes[0]?.baggages?.checked?.ADT?.title ===
+            selectedBaggages
         )
       );
- 
+
       setFilteredData(filtered);
     } else {
-    
       setFilteredData(data);
     }
   }, [selectedBaggages, data]);
-  
-  // useEffect(() => {
-  //   const filtered = data.filter((flight) =>
-  //     priceFilter ? flight.filter.price <= parseFloat(priceFilter) : true
-  //   );
-  //   setFilteredData(filtered);
-  // }, [priceFilter, data]);
 
-  // useEffect(() => {
-  //   const filtered = data.filter((flight) =>
-  //     flight.flight_group.some((segment) =>
-  //       selectedAirlines[segment?.airline_name]
-  //     )
-  //   );
-  //   setFilteredData(filtered);
-  // }, [selectedAirlines, data]);
+  useEffect(() => {
+    if (stop && stop.length > 0) {
+      const filtered = data.filter((flight) =>
+        flight.flight_group.some((segment) =>
+          stop.includes(segment.no_of_stops_title)
+        )
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [stop, data]);
+
+  useEffect(() => {
+    const filtered = data.filter((flight) =>
+      flight.flight_group.some(
+        (segment) => selectedAirlines[segment?.airline_name]
+      )
+    );
+    setFilteredData(filtered);
+  }, [selectedAirlines, data]);
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
 
   const handleSwap = () => {
     if (input1 && input2) {
@@ -111,12 +128,13 @@ const FlightSearch = () => {
       console.error("Error handling one-way search:", error);
     }
   };
+
   return (
     <div>
       <div className="pt-16 px-[220px]">
         <div className="shadow-xl h-auto p-9">
           {/* Tabs for One Way, Round Trip, and Multi-City */}
-          <div className="flex justify-start items-center gap-2 ml-16">
+          <div className="flex justify-start items-center gap-2 px-[230px]">
             <button
               className={`flex justify-evenly items-center gap-2 px-6 py-1 bg-gray-100 hover:bg-gray-300 rounded-2xl ${
                 activeTab === "oneWay" ? "bg-green-400" : ""
@@ -249,44 +267,39 @@ const FlightSearch = () => {
 
         <div className="flex flex-row gap-7 my-5">
           {/* Filter component */}
-          <div className="w-[35vh]">
+          <div className="w-[25vw]">
             <Filter />
           </div>
           {/* Data display */}
-          <div className="w-full py-4 px-4 shadow-2xl h-screen overflow-y-auto">
-            <div role="tablist" className="tabs tabs-bordered p-10">
-           
-<input
-  type="radio"
-  name="my_tabs_1"
-  role="tab"
-  className="tab text-2xl font-bold mb-10 ml-[350px]"
-  aria-label="Cheapest"
-  checked
-/>
-<div role="tabpanel" className="tab-content">
+          <div className="w-full py-4 px-4 shadow-2xl h-screen  overflow-y-auto">
+            <div role="tablist" className="tabs tabs-bordered">
+              <input
+                type="radio"
+                name="my_tabs_1"
+                role="tab"
+                className="tab ml-[25vw]"
+                aria-label="Cheapest"
+              />
+              <div role="tabpanel" className="tab-content p-10">
+                {" "}
+                {filterData && filterData.length > 0
+                  ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+                  : data?.map((f) => <DataCard key={f._id} f={f} />)}
+              </div>
 
-  {filterData && filterData.length > 0
-    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
-    : data?.map((f) => <DataCard key={f._id} f={f} />)}
-</div>
-
-<input
-  type="radio"
-  name="my_tabs_2" 
-  role="tab"
-  className="tab text-2xl mb-10 font-bold"
-  aria-label="Fastest"
-/>
-
-
-<div role="tabpane2" className="tab-content p-10">
-
-  {filterData && filterData.length > 0
-    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
-    : data?.map((f) => <DataCard key={f._id} f={f} />)}
-</div>
-
+              <input
+                type="radio"
+                name="my_tabs_1"
+                role="tab"
+                className="tab"
+                aria-label="Fastest"
+                checked
+              />
+              <div role="tabpanel" className="tab-content p-10">
+                {filterData && filterData.length > 0
+                  ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+                  : data?.map((f) => <DataCard key={f._id} f={f} />)}
+              </div>
             </div>
           </div>
         </div>

@@ -54,7 +54,7 @@ const DataCard = ({ f }) => {
       } */}
       <div className="card lg:card-side hover:border-[#e3b1b3] hover:border-2 mb-7 bg-[#ffffff] shadow-2xl">
         <div className="overflow-x-auto  flex flex-row justify-between  gap-2">
-          <table className="table w-[40vw] ">
+          <table className="table w-[43vw] ">
             {/* head */}
             <thead className="bg-[#ffffff] px-4 py-2 ">
               <tr>
@@ -139,7 +139,7 @@ const DataCard = ({ f }) => {
                   ))}
                 </td>
 
-                <td>
+                <td >
                   {flight_group.map((flight, index) => (
                     <div key={index}>
                       {flight.routes[0].baggages?.checked?.ADT?.title}
@@ -180,7 +180,7 @@ const DataCard = ({ f }) => {
                       {/* Displaying operating carrier logo */}
                       <img
                         className="w-10 h-10 rounded-full"
-                        src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight.routes[0].operating.carrier_logo}`}
+                        src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight?.routes[1]?.operating?.carrier_logo}`}
                         alt="Operating Carrier Logo"
                       />
                     </div>
@@ -188,13 +188,13 @@ const DataCard = ({ f }) => {
                 </th>
                 <td>
                   {" "}
-                  {flight_group.map((flight) => (
-                    <div key={flight.routes[0].air_segment_key}>
+                  {flight_group?.map((flight) => (
+                    <div key={flight?.routes[1]?.air_segment_key}>
                       {" "}
                       <p>
-                        {flight.routes[0].operating.carrier}
+                        {flight?.routes[1]?.operating?.carrier}
                         {" -"}
-                        {flight.routes[0].operating.flight_number}
+                        {flight?.routes[1]?.operating?.flight_number}
                       </p>{" "}
                     </div>
                   ))}
@@ -205,11 +205,11 @@ const DataCard = ({ f }) => {
                     <p> {formattedArrivalTime}</p>
 
                     <div>
-                      {flight_group.map((flight, index) => (
+                      {flight_group?.map((flight, index) => (
                         <div key={index}>
                           <p>
                             <span className="text-md ">
-                              Terminal- {flight.routes[0]?.origin_terminal}{" "}
+                              Terminal- {flight?.routes[1]?.origin_terminal}{" "}
                             </span>
                           </p>
                         </div>
@@ -225,11 +225,11 @@ const DataCard = ({ f }) => {
                       {baggage[1]?.destination_terminal}
                       {formattedDepartureTime}
                     </p>
-                    {flight_group.map((flight, index) => (
+                    {flight_group?.map((flight, index) => (
                       <div key={index}>
                         <p>
                           <span className="text-md ">
-                            Terminal- {flight.routes[0]?.destination_terminal}{" "}
+                            Terminal- {flight?.routes[1]?.destination_terminal}{" "}
                           </span>
                         </p>
                       </div>

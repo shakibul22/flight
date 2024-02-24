@@ -2,20 +2,23 @@ import React, { useState, useContext } from "react";
 import { createContextProvider } from "../Context/Context";
 
 function Filter() {
-  const {setSelectedBaggages, selectedAirlines, setSelectedAirlines,priceFilter, setPriceFilter } =
-    useContext(createContextProvider);
-   
+  const {
+    setSelectedBaggages,
+    selectedAirlines,
+    setSelectedAirlines,
+    priceFilter,
+    setPriceFilter,
+    setStop,
+  } = useContext(createContextProvider);
 
-  
-
-  
-  
-    // Function to handle price filter change
-    const handlePriceFilterChange = (event) => {
-      setPriceFilter(event.target.value);
-    };
+  const handlePriceFilterChange = (event) => {
+    setPriceFilter(event.target.value);
+  };
   const handleBaggageSelection = (baggageOption) => {
     setSelectedBaggages(baggageOption);
+  };
+  const handleStopSelection = (stoppage) => {
+    setStop(stoppage);
   };
 
   // Function to handle airline selection
@@ -47,54 +50,65 @@ function Filter() {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            onChange={() => handleBaggageSelection("20 Kg")}
+            onChange={() => handleBaggageSelection("20 kg")}
           />
           20 Kg
         </label>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            onChange={() => handleBaggageSelection("25 Kg")}
+            onChange={() => handleBaggageSelection("25 kg")}
           />
           25 Kg
         </label>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            onChange={() => handleBaggageSelection("30 Kg")}
+            onChange={() => handleBaggageSelection("30 kg")}
           />
           30 Kg
         </label>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            onChange={() => handleBaggageSelection("35 Kg")}
+            onChange={() => handleBaggageSelection("35 kg")}
           />
           35 Kg
         </label>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            onChange={() => handleBaggageSelection("40 Kg")}
+            onChange={() => handleBaggageSelection("40 kg")}
           />
           40 Kg
         </label>
       </div>
 
-      <div className="  mb-70 mt-10 border-y-2 py-8">
-        <h6 className="text-md lg:text-lg mb-5">no of stops</h6>
+      <div className="mb-70 mt-10 border-y-2 py-8">
+        <h6 className="text-md lg:text-lg mb-5">No of Stops</h6>
         <div className="">
           <ul className="flex flex-col justify-start gap-2">
-            <li>
-              <input type="checkbox" name="nowarranty" id="" /> 1 stop flight
-            </li>
-            <li>
-              <input type="checkbox" name="sellerwarranty" id="" />2 stop flight
-            </li>
-            <li>
-              <input type="checkbox" name="brandwarranty" id="" />
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                onChange={() => handleStopSelection("1 Stop Flight")}
+              />
+              1 Stop Flight
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                onChange={() => handleStopSelection("2 Stop Flight")}
+              />
+              2 Stop Flight
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                onChange={() => handleStopSelection("Direct Flight")}
+              />
               Direct Flight
-            </li>
+            </label>
           </ul>
         </div>
       </div>
@@ -163,21 +177,22 @@ function Filter() {
           <div className="mb-4 border-b-2 pb-8">
             <label className="block mb-1">Price Range:</label>
             <input
-              type="number"
+              type="range"
               min="0"
-              step="0.01"
-              placeholder="Enter max price"
+              max="100000"
+              step="1"
               value={priceFilter}
               onChange={handlePriceFilterChange}
             />
+            <div>Max Price: ${priceFilter}</div>
           </div>
         </div>
         <div className="container mx-auto">
           <h6 className="text-md lg:text-lg mb-5">Filter by Airlines</h6>
-          <div className="mb-4 border-b-2 pb-8">
+        
             <div className="">
-              <h3>Airlines</h3>
-              <ul className="flex flex-row flex-wrap justify-start gap-2">
+ 
+              <ul className="flex flex-col justify-start gap-2">
                 {/* Render checkboxes for each airline option */}
                 {[
                   "Emirates",
@@ -199,7 +214,7 @@ function Filter() {
               </ul>
             </div>
           </div>
-        </div>
+     
       </div>
     </div>
   );
