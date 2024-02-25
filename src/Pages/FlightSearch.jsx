@@ -12,7 +12,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createContextProvider } from "../Context/Context";
 import Multicity from "../Components/Multicity";
-import { FaSearchengin } from "react-icons/fa6";
+import { FaSearchengin } from "react-icons/fa";
+
+// Import the spinner image
+import spinner from "/spinner.svg";
 
 const FlightSearch = () => {
   const [activeTab, setActiveTab] = useState("oneWay");
@@ -22,8 +25,7 @@ const FlightSearch = () => {
     setTravelClass,
     selectedBaggages,
     selectedAirlines,
-    priceFilter,
-    stop,
+    stop,priceFilter,
     selectedCityCode,
     returnPlaceholder,
     selectedCityCode1,
@@ -33,54 +35,53 @@ const FlightSearch = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("");
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
+  const [loading, setLoading] = useState(false); // State for loading status
+
   const handleTravelClassChange = (event) => {
     setTravelClass(event.target.value);
   };
-  // useEffect(() => {
-  //   if (data) {
-  //     // Only filter data if it's not undefined
-  //     const filtered = data.filter(
-  //       (flight) => Math.floor(flight.total_price) === priceFilter
-  //     );
-  //     setFilteredData(filtered);
-  //   }
-  // }, [priceFilter, data]);
-  
-useEffect(() => {
-  let filtered = data;
 
-  // Filter based on selected baggages
-  if (selectedBaggages && selectedBaggages.length > 0) {
-    filtered = filtered.filter((flight) =>
-      flight.flight_group.some(
-        (segment) =>
-          segment?.routes[0]?.baggages?.checked?.ADT?.title ===
-          selectedBaggages
-      )
-    );
-  }
+  useEffect(() => {
+    let filtered = data;
 
-  // Filter based on stops
-  if (stop && stop.length > 0) {
-    filtered = filtered.filter((flight) =>
-      flight.flight_group.some((segment) =>
-        stop.includes(segment.no_of_stops_title)
-      )
-    );
-  }
+    // Filter based on selected baggages
+    if (selectedBaggages && selectedBaggages.length > 0) {
+      filtered = filtered.filter((flight) =>
+        flight.flight_group.some(
+          (segment) =>
+            segment?.routes[0]?.baggages?.checked?.ADT?.title ===
+            selectedBaggages
+        )
+      );
+    }
 
-  // Filter based on selected airlines
-  if (selectedAirlines && Object.keys(selectedAirlines).length > 0) {
-    filtered = filtered.filter((flight) =>
-      flight.flight_group.some(
-        (segment) => selectedAirlines[segment?.airline_name]
-      )
-    );
-  }
+    // Filter based on stops
+    if (stop && stop.length > 0) {
+      filtered = filtered.filter((flight) =>
+        flight.flight_group.some((segment) =>
+          stop.includes(segment.no_of_stops_title)
+        )
+      );
+    }
+    if (priceFilter) {
+      filtered = filtered.filter(
+        (flight) => Math.floor(flight.total_price) === priceFilter
+      );
+    }
 
-  // Update the filtered data state
-  setFilteredData(filtered);
-}, [selectedBaggages, stop, selectedAirlines, data]);
+
+    // Filter based on selected airlines
+    if (selectedAirlines && Object.keys(selectedAirlines).length > 0) {
+      filtered = filtered.filter((flight) =>
+        flight.flight_group.some(
+          (segment) => selectedAirlines[segment?.airline_name]
+        )
+      );
+    }
+
+    // Update the filtered data state
+    setFilteredData(filtered);
+  }, [selectedBaggages, stop, selectedAirlines, data]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -93,7 +94,11 @@ useEffect(() => {
       setInput2(temp);
     }
   };
+
   const handleSearch = async () => {
+    // Set loading to true before making the API call
+    setLoading(true);
+
     const data = {
       journey_type: { activeTab },
       segment: [
@@ -124,6 +129,9 @@ useEffect(() => {
       setData(res.data);
     } catch (error) {
       console.error("Error handling one-way search:", error);
+    } finally {
+      // Set loading to false after data retrieval, whether successful or not
+      setLoading(false);
     }
   };
 
@@ -270,35 +278,41 @@ useEffect(() => {
           </div>
           {/* Data display */}
           <div className="w-full py-4 px-4 shadow-2xl h-screen  overflow-y-auto">
-            <div role="tablist" className="tabs tabs-bordered">
-              <input
-                type="radio"
-                name="my_tabs_1"
-                role="tab"
-                className="tab ml-[25vw]"
-                aria-label="Cheapest"
-              />
-              <div role="tabpanel" className="tab-content p-10">
-                {" "}
-                {filterData && filterData.length > 0
-                  ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
-                  : data?.map((f) => <DataCard key={f._id} f={f} />)}
+            {loading ? ( // Conditionally render spinner if loading is true
+              <div className="flex justify-center items-center h-full">
+                <img src={spinner} alt="Loading..." />
               </div>
+            ) : (
+              <div role="tablist" className="tabs tabs-bordered">
+                <input
+                  type="radio"
+                  name="my_tabs_1"
+                  role="tab"
+                  className="tab ml-[25vw]"
+                  aria-label="Cheapest"
+                />
+                <div role="tabpanel" className="tab-content p-10">
+                  {" "}
+                  {filterData && filterData.length > 0
+                    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+                    : data?.map((f) => <DataCard key={f._id} f={f} />)}
+                </div>
 
-              <input
-                type="radio"
-                name="my_tabs_1"
-                role="tab"
-                className="tab"
-                aria-label="Fastest"
-                checked
-              />
-              <div role="tabpanel" className="tab-content p-10">
-                {filterData && filterData.length > 0
-                  ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
-                  : data?.map((f) => <DataCard key={f._id} f={f} />)}
+                <input
+                  type="radio"
+                  name="my_tabs_1"
+                  role="tab"
+                  className="tab"
+                  aria-label="Fastest"
+                  checked
+                />
+                <div role="tabpanel" className="tab-content p-10">
+                  {filterData && filterData.length > 0
+                    ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
+                    : data?.map((f) => <DataCard key={f._id} f={f} />)}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
