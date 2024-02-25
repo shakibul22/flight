@@ -13,8 +13,9 @@ const Context = ({ children }) => {
   const [selectedAirlines, setSelectedAirlines] = useState({});
   const [priceFilter, setPriceFilter] = useState(""); 
   const [stop, setStop] = useState(""); 
+  const [selectedTimingSlots, setSelectedTimingSlots] = useState([]);
   const info = {
-    selectedCityCode,
+    selectedCityCode,selectedTimingSlots, setSelectedTimingSlots,
     selectedCityCode1,
     setSelectedCityCode1,
     setSelectedCityCode,

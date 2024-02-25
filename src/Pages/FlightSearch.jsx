@@ -27,7 +27,7 @@ const FlightSearch = () => {
     selectedAirlines,
     stop,priceFilter,
     selectedCityCode,
-    returnPlaceholder,
+    returnPlaceholder,selectedTimingSlots,
     selectedCityCode1,
     departurePlaceholder,
   } = useContext(createContextProvider);
@@ -63,6 +63,12 @@ const FlightSearch = () => {
         )
       );
     }
+    if (selectedTimingSlots) {
+      filtered = filtered.filter((flight) => flight.filter.departure_timing_slot === selectedTimingSlots);
+    }
+
+  
+  
     if (priceFilter) {
       filtered = filtered.filter(
         (flight) => Math.floor(flight.total_price) === priceFilter

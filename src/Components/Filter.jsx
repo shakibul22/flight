@@ -9,7 +9,15 @@ function Filter() {
     priceFilter,
     setPriceFilter,
     setStop,
+    setSelectedTimingSlots,
   } = useContext(createContextProvider);
+
+ 
+  const handleTimingSlotChange = (event) => {
+    const value = event.target.value;
+
+    setSelectedTimingSlots(value);
+  };
 
   const handlePriceFilterChange = (event) => {
     setPriceFilter(event.target.value);
@@ -21,7 +29,6 @@ function Filter() {
     setStop(stoppage);
   };
 
-  // Function to handle airline selection
   const handleAirlineSelection = (airline) => {
     setSelectedAirlines({
       ...selectedAirlines,
@@ -115,62 +122,65 @@ function Filter() {
 
       <div className="container mx-auto mb-8 border-b-2 pb-8">
         <h6 className="text-md lg:text-lg mb-5">Flight Timings</h6>
-        <div className="">
+        <div>
           <ul className="flex flex-row flex-wrap justify-start gap-2">
             <li>
-              <input type="checkbox" className="mr-2" />
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="early-morning"
+                onChange={handleTimingSlotChange}
+              />
               <span>Early Morning 3AM-7AM</span>
             </li>
             <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Morning 7AM-12PM</span>
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="morning"
+                onChange={handleTimingSlotChange}
+              />
+              <span>Morning 7AM-12PM</span>
             </li>
             <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Afternoon 12PM-4PM</span>
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="afternoon"
+                onChange={handleTimingSlotChange}
+              />
+              <span>Afternoon 12PM-4PM</span>
             </li>
             <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Evening 4PM-9PM</span>
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="evening"
+                onChange={handleTimingSlotChange}
+              />
+              <span>Evening 4PM-9PM</span>
             </li>
             <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Night 9PM-12AM</span>
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="night"
+                onChange={handleTimingSlotChange}
+              />
+              <span>Night 9PM-12AM</span>
             </li>
             <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Mid-Night 12AM-3AM</span>
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="mid-night"
+                onChange={handleTimingSlotChange}
+              />
+              <span>Mid-Night 12AM-3AM</span>
             </li>
           </ul>
         </div>
-        <div className="">
-          <ul className="flex flex-row flex-wrap justify-start gap-2">
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span>Early Morning 3AM-7AM</span>
-            </li>
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Morning 7AM-12PM</span>
-            </li>
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Afternoon 12PM-4PM</span>
-            </li>
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Evening 4PM-9PM</span>
-            </li>
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Night 9PM-12AM</span>
-            </li>
-            <li>
-              <input type="checkbox" className="mr-2" />
-              <span> Mid-Night 12AM-3AM</span>
-            </li>
-          </ul>
-        </div>
+
         <div className="container mx-auto">
           <h6 className="text-md lg:text-lg mb-5">Filter by Price</h6>
           {/* Price range filter */}
@@ -189,32 +199,30 @@ function Filter() {
         </div>
         <div className="container mx-auto">
           <h6 className="text-md lg:text-lg mb-5">Filter by Airlines</h6>
-        
-            <div className="">
- 
-              <ul className="flex flex-col justify-start gap-2">
-                {/* Render checkboxes for each airline option */}
-                {[
-                  "Emirates",
-                  "Fly Dubai",
-                  "Qatar Airways",
-                  "Turkish Airlines",
-                  "Flynus",
-                ].map((airline, index) => (
-                  <li key={index}>
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      checked={selectedAirlines[airline]}
-                      onChange={() => handleAirlineSelection(airline)}
-                    />
-                    <span>{airline}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+
+          <div className="">
+            <ul className="flex flex-col justify-start gap-2">
+              {/* Render checkboxes for each airline option */}
+              {[
+                "Emirates",
+                "Fly Dubai",
+                "Qatar Airways",
+                "Turkish Airlines",
+                "Flynus",
+              ].map((airline, index) => (
+                <li key={index}>
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedAirlines[airline]}
+                    onChange={() => handleAirlineSelection(airline)}
+                  />
+                  <span>{airline}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-     
+        </div>
       </div>
     </div>
   );
