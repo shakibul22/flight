@@ -156,7 +156,7 @@ const FlightSearch = () => {
       <div className="pt-16 lg:px-[30px] 2xl:px-[220px]">
         <div className="shadow-xl h-auto p-6">
           {/* Tabs for One Way, Round Trip, and Multi-City */}
-          <div className="flex justify-between items-center gap-2 px-[20px] lg:px-[210px]">
+          <div className="flex justify-between items-center gap-2 px-[0px] lg:px-[140px]  2xl:px-[240px]">
             <div className="flex justify-start items-center gap-2">
               <button
                 className={`flex justify-evenly items-center gap-2 px-4 py-2 bg-gray-100 text-[#bd3236] border-2 hover:bg-[#f2e3e4] rounded-full ${
