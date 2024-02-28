@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { MdClose } from "react-icons/md";
-import { getAllAirports } from "../Actions/airport";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiCommercialAirplane } from "react-icons/gi";
+import { MdClose } from "react-icons/md";
+import { getAllAirports } from "../Actions/airport";
 import { createContextProvider } from "../Context/Context";
 // import { useDispatch } from "react-redux";
 
@@ -10,12 +10,11 @@ const InputModal = ({ inputValue, setInputValue }) => {
   const [modal, setModal] = useState(false);
   const [airport, setAirport] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
-  const {setSelectedCityCode}=useContext(createContextProvider)
+  const { setSelectedCityCode } = useContext(createContextProvider);
   const modalRef = useRef(null);
   // const dispatch = useDispatch();
 
   useEffect(() => {
-
     async function fetchAirports() {
       try {
         const res = await getAllAirports();
@@ -25,7 +24,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
       }
     }
     fetchAirports();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     // Filter airports based on input value
@@ -54,7 +53,7 @@ const InputModal = ({ inputValue, setInputValue }) => {
   }, []);
 
   const handleClearInput = () => {
-    setInputValue(""); 
+    setInputValue("");
   };
 
   const handleFocus = () => {
@@ -68,7 +67,6 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   const handleKeyDown = (e) => {
     if (e.key !== "Backspace") {
-   
       setModal(true);
     }
   };
@@ -90,12 +88,11 @@ const InputModal = ({ inputValue, setInputValue }) => {
   const handleSelectPopularCity = (city) => {
     setInputValue(city);
 
-    const cityCode = city.toLowerCase().substring(0, 3); 
+    const cityCode = city.toLowerCase().substring(0, 3);
     setSelectedCityCode(cityCode);
     setModal(false);
     setFilteredAirports([]);
   };
-
 
   function generateShortForm(airportName) {
     const words = airportName.split(" ");
@@ -115,8 +112,8 @@ const InputModal = ({ inputValue, setInputValue }) => {
 
   return (
     <div
-      className={`duration-200 absolute -mt-6 rounded-lg border-2 border border-black ${
-        modal ? "w-[350px] z-30 bg-white border" : ""
+      className={`duration-200 absolute -mt-6 rounded-lg border-2   ${
+        modal ? "w-[350px] z-30 bg-white " : "w-full md:w-[190px] lg:w-[212px]"
       }`}
     >
       <div className={`${modal ? "w-full z-[50]" : "static"}`} ref={modalRef}>
@@ -124,19 +121,17 @@ const InputModal = ({ inputValue, setInputValue }) => {
           <input
             type="text"
             placeholder="From"
-            className={`rounded-sm border   h-14 p-4 pl-3 w-[200px] lg:w-full duration-200 ${
-              modal
-                ? "w-full z-20 pl-1 border-4 border-[#e7fddc]"
-                : "w-[27wh] z-0"
+            className={`rounded-sm    h-14  pl-3  lg:w-full duration-200 ${
+              modal ? "w-full z-20 pl-1  border-[#e7fddc]" : " z-0"
             }`}
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            onKeyDown={handleKeyDown} 
+            onKeyDown={handleKeyDown}
           />
           {modal && inputValue && (
             <MdClose
-              className="transform translate-x-32 lg:translate-x-48 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
+              className="transform translate-x-32 lg:translate-x-72 z-50 text-2xl bg-slate-300 rounded-full overflow-hidden absolute cursor-pointer"
               onClick={handleClearInput}
             />
           )}
@@ -147,7 +142,6 @@ const InputModal = ({ inputValue, setInputValue }) => {
           }`}
         >
           <div>
-  
             <div>
               {filteredAirports.slice(0, 10).map((airport) => (
                 <div
@@ -155,12 +149,12 @@ const InputModal = ({ inputValue, setInputValue }) => {
                   onClick={() => handleSelectAirport(airport)}
                   className="cursor-pointer grid grid-cols-2 items-center w-[55vh] justify-between gap-5"
                 >
-                  <div className="border-b-2 flex flex-row justify-between gap-6 hover:bg-[#e7fddc] p-2 ">
-                    <span className="flex flex-row items-center gap-2">
+                  <div className="border-b-2 flex flex-row justify-between text-[#50b412]  hover:bg-[#e7fddc]  ">
+                    <span className="flex flex-row  items-center gap-2">
                       {airport.airport_name
                         .toLowerCase()
                         .includes("airport") ? (
-                        <GiCommercialAirplane className="text-3xl font-bold" />
+                        <GiCommercialAirplane className="text-3xl text-[#50b412] font-bold" />
                       ) : (
                         <FaLocationDot className="text-2xl font-bold" />
                       )}
@@ -171,7 +165,6 @@ const InputModal = ({ inputValue, setInputValue }) => {
                 </div>
               ))}
             </div>
-
 
             {filteredAirports.length === 0 && (
               <div>

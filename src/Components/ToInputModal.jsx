@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { FaLocationDot } from "react-icons/fa6";
+import { GiCommercialAirplane } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { getAllAirports } from "../Actions/airport";
-import { GiCommercialAirplane } from "react-icons/gi";
-import { FaLocationDot } from "react-icons/fa6";
 import { createContextProvider } from "../Context/Context";
 const ToInputModal = ({ inputValue, setInputValue }) => {
   const [modal, setModal] = useState(false);
@@ -113,9 +113,7 @@ const ToInputModal = ({ inputValue, setInputValue }) => {
             type="text"
             placeholder="To"
             className={`border-2 h-14 p-4 pl-8 w-[170px] lg:w-full duration-200 ${
-              modal
-                ? "w-full z-20 pl-3 border-4 border-[#e7fddc]"
-                : "w-[25vh] z-0"
+              modal ? "w-full z-20 pl-3 border-4 border-[#e7fddc]" : " z-0"
             }`}
             value={inputValue}
             onChange={handleChange}

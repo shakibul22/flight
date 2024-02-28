@@ -14,11 +14,13 @@ const Context = ({ children }) => {
   const [priceFilter, setPriceFilter] = useState(""); 
   const [stop, setStop] = useState(""); 
   const [selectedTimingSlots, setSelectedTimingSlots] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Any Flight");
+
   const info = {
     selectedCityCode,selectedTimingSlots, setSelectedTimingSlots,
     selectedCityCode1,
     setSelectedCityCode1,
-    setSelectedCityCode,
+    setSelectedCityCode,selectedOption, setSelectedOption,
     setData,departurePlaceholder, setDeparturePlaceholder,
     data ,returnPlaceholder, setReturnPlaceholder,travelClass, setTravelClass,selectedBaggages, setSelectedBaggages,selectedAirlines, setSelectedAirlines,priceFilter, setPriceFilter,stop, setStop
   };

@@ -100,7 +100,7 @@ const SearchFormTab = () => {
           className="flex flex-row justify-evely bg-[#9da08e] px-2 rounded-md items-center gap-1"
         >
           <PiAirplaneInFlightBold className="font-semibold text-blue-700" />{" "}
-          <span className="font-semibold text-lg">WegoPro Business Travel</span>
+          <span className="font-semibold text-lg">WegoPro </span>Business Travel
         </a>
       </div>
     </div>

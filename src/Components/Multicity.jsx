@@ -36,12 +36,9 @@ const Multicity = () => {
   };
 
   return (
-    <div className=" w-[80vh]">
+    <div className=" w-[76vh]">
       {cities.map((city, index) => (
-        <div
-          className="multicity flex justify-start gap-1 items-center"
-          key={index}
-        >
+        <div className="multicity flex justify-start  items-center" key={index}>
           <div className="w-full relative mr-1">
             <InputModal
               inputValue={city.input1}
@@ -52,12 +49,12 @@ const Multicity = () => {
           </div>
           <button
             onClick={() => handleSwap(index)}
-            className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[210px] mt-2   overflow-auto rounded-full border-white border-4 ${
+            className={`z-10 absolute transform  translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[194px] mt-2   overflow-auto rounded-full border-white border-4 ${
               city.input1 && city.input2 ? "bg-green-400" : "bg-gray-200 "
             }`}
             disabled={!city.input1 || !city.input2}
           >
-            <MdSwapHoriz className="text-xs   text-gray-950 w-10 h-10  " />{" "}
+            <MdSwapHoriz className="text-xs border-2  ring text-gray-950 w-10 h-10" />{" "}
           </button>
           {/* Arrow button */}
           <div className="w-full relative">
@@ -84,7 +81,7 @@ const Multicity = () => {
       ))}
       <button
         type="button"
-        className="transform translate-x-64 absolute top-12 bg-green-400 px-3 py-2 border-2 rounded-md  right-72"
+        className="transform translate-x-64 absolute top-12 bg-green-400 px-3 py-2 border-2 rounded-md  right-[30%]"
         onClick={addFlight}
       >
         + Add Flight
