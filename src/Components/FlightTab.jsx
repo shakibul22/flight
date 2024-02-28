@@ -4,13 +4,12 @@ import DatePicker from "./DatePicker";
 import InputModal from "./InputModal";
 import ToInputModal from "./ToInputModal";
 // import { getAllAirports } from "../Actions/airport"
+import { Link } from "react-router-dom";
+import { createContextProvider } from "../Context/Context";
 import DropDown from "./DropDown";
 import Multicity from "./Multicity";
-import { createContextProvider } from "../Context/Context";
-import { Link, useNavigate } from "react-router-dom";
 
 import { getAllOneWay } from "../Actions/airport";
-import FlightSearch from "../Pages/FlightSearch";
 import DatePickers from "./DatePicker";
 const FlightTab = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("");
@@ -18,11 +17,11 @@ const FlightTab = () => {
     selectedCityCode,
     returnPlaceholder,
     selectedCityCode1,
-    departurePlaceholder,travelClass,
+    departurePlaceholder,
+    travelClass,
   } = useContext(createContextProvider);
 
   const { setData } = useContext(createContextProvider);
-
 
   const [activeTab, setActiveTab] = useState("OneWay"); // Set default active tab
   const handleTabChange = (tabName) => {
@@ -67,14 +66,13 @@ const FlightTab = () => {
       const res = await getAllOneWay(data);
 
       setData(res.data);
-    
     } catch (error) {
       console.error("Error handling one-way search:", error);
     }
   };
 
   return (
-    <div className="h-60">
+    <div className="h-auto">
       <div role="tablist" className="tabs ">
         <input
           type="radio"
@@ -88,9 +86,9 @@ const FlightTab = () => {
           aria-label="One-way"
           onClick={() => handleTabChange("OneWay")}
         />
-        <div role="tabpanel" className="tab-content w-[105vh]  p-5">
-          <div className="flex justify-start gap-4 items-center">
-            <div className="w-full relative mr-2">
+        <div role="tabpanel" className="tab-content w-full  p-5">
+          <div className="flex justify-start gap-2 items-center">
+            <div className="w-full relative ">
               <InputModal inputValue={input1} setInputValue={setInput1} />
             </div>
             <button
@@ -99,10 +97,10 @@ const FlightTab = () => {
                 input1 && input2
                   ? "bg-green-500"
                   : "bg-gray-300 cursor-not-allowed"
-              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[207px] mt-2 overflow-auto rounded-full border-gray-400 border-4`}
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[194px] mt-2 overflow-auto rounded-full border-gray-100 border-4`}
               disabled={!input1 || !input2}
             >
-              <MdSwapHoriz className="text-xs  text-gray-950 w-10 h-10" />
+              <MdSwapHoriz className="text-xs  text-gray-650 w-10 h-10" />
             </button>
 
             {/* Arrow button */}
@@ -132,9 +130,9 @@ const FlightTab = () => {
           defaultChecked
           onClick={() => handleTabChange("RoundTrip")}
         />
-        <div role="tabpanel" className="tab-content  w-[105vh]  p-5 ">
+        <div role="tabpanel" className="tab-content  w-full  p-5 ">
           <div className="flex justify-start gap-4 items-center">
-            <div className="w-full relative mr-2">
+            <div className="w-full relative ">
               <InputModal inputValue={input1} setInputValue={setInput1} />
             </div>
             <button
@@ -143,8 +141,8 @@ const FlightTab = () => {
                 input1 && input2
                   ? "bg-green-500"
                   : "bg-gray-300 cursor-not-allowed"
-              } z-10 absolute transform translate-x-[175px] md:translate-x-[170px] 2xl:translate-x-[207px] overflow-auto 
-              rounded-full border-2 border-black translate-y-1 h-15 w-15 `}
+              } z-10 absolute transform translate-x-[175px] md:translate-x-[205px] 2xl:translate-x-[196px] overflow-auto 
+              rounded-full border-2 border-gray-100 translate-y-1 h-15 w-15 `}
               disabled={!input1 || !input2}
             >
               <MdSwapHoriz className="text-xs border-2  ring text-gray-950 w-10 h-10" />

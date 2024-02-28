@@ -54,7 +54,7 @@ const DataCard = ({ f }) => {
       } */}
       <div className="card lg:card-side hover:border-[#e3b1b3] hover:border-2 mb-7 bg-[#ffffff] shadow-2xl">
         <div className="overflow-x-auto  flex flex-row justify-between  gap-2">
-          <table className="table w-[43vw] ">
+          <table className="table 2xl:w-[42vw] ">
             {/* head */}
             <thead className="bg-[#ffffff] px-4 py-2 ">
               <tr>
@@ -63,7 +63,9 @@ const DataCard = ({ f }) => {
                 <th>Deparature</th>
                 <th>Arrival</th>
                 <th>Duration</th>
-                <th>Baggage</th>
+                <th className=" flex gap-1 items-center justify-center">
+                  Baggage
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -74,7 +76,7 @@ const DataCard = ({ f }) => {
                     <div key={flight.routes[0].air_segment_key}>
                       {/* Displaying operating carrier logo */}
                       <img
-                        className="w-10 h-10 rounded-full"
+                        className="w-10 h-10 rounded-full border-2"
                         src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight.routes[0].operating.carrier_logo}`}
                         alt="Operating Carrier Logo"
                       />
@@ -139,7 +141,7 @@ const DataCard = ({ f }) => {
                   ))}
                 </td>
 
-                <td >
+                <td className=" flex gap-1 items-center justify-center">
                   {flight_group.map((flight, index) => (
                     <div key={index}>
                       {flight.routes[0].baggages?.checked?.ADT?.title}
@@ -164,7 +166,7 @@ const DataCard = ({ f }) => {
                       {flightGroup.transit_time !== null ? (
                         <p>Transit Time: {flightGroup.transit_time}</p>
                       ) : (
-                        <p>No transit time available</p>
+                        <p>Not available</p>
                       )}
                     </div>
                   ))}
@@ -179,8 +181,8 @@ const DataCard = ({ f }) => {
                     <div key={flight?.routes[1]?.air_segment_key}>
                       {/* Displaying operating carrier logo */}
                       <img
-                        className="w-10 h-10 rounded-full"
-                        src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight?.routes[1]?.operating?.carrier_logo}`}
+                        className="w-10 h-10 rounded-full border-2"
+                        src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight?.routes[0]?.marketing?.carrier_logo}`}
                         alt="Operating Carrier Logo"
                       />
                     </div>
@@ -244,7 +246,7 @@ const DataCard = ({ f }) => {
                   ))}
                 </td>
 
-                <td>
+                <td className=" flex gap-1 items-center justify-center">
                   {flight_group.map((flight, index) => (
                     <div key={index}>
                       {flight.routes[1]?.baggages?.checked?.ADT?.title}
