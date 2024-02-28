@@ -345,7 +345,7 @@ const FlightSearch = () => {
                   className="tab ml-[25vw]"
                   aria-label="Cheapest"
                 />
-                <div role="tabpanel" className="tab-content p-10">
+                <div role="tabpanel" className="tab-content p-8">
                   {" "}
                   {filterData && filterData.length > 0
                     ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
@@ -360,7 +360,7 @@ const FlightSearch = () => {
                   aria-label="Fastest"
                   checked
                 />
-                <div role="tabpanel" className="tab-content p-10">
+                <div role="tabpanel" className="tab-content p-8">
                   {filterData && filterData.length > 0
                     ? filterData?.map((f) => <DataCard key={f._id} f={f} />)
                     : data?.map((f) => <DataCard key={f._id} f={f} />)}

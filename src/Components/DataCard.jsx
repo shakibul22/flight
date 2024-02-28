@@ -80,7 +80,7 @@ const DataCard = ({ f }) => {
         <div className="overflow-x-auto  flex flex-col justify-between  gap-2">
           <div className="flex flex-row justify-between  gap-2">
             {" "}
-            <table className="table 2xl:w-[42vw] ">
+            <table className="table lg:w-[54vw] 2xl:w-[44vw] ">
               {/* head */}
               <thead className="bg-[#ffffff] px-4 py-2 ">
                 <tr>
@@ -295,15 +295,23 @@ const DataCard = ({ f }) => {
                 </tr>
               </tbody>
             </table>
-            <h3 className="flex flex-col justify-center items-center  ml-4 font-semibold text-center">
+            <h3 className="flex flex-col justify-center gap-2 items-center p-5  ml-auto font-semibold text-center">
               <span className="text-sm">Per 1 Passenger</span>₨ {total_price}
+              <button className="btn py-3 px-6 text-rose-700 border-rose-700">
+                Select
+              </button>
+              <span className="text-sm">All Passengers</span>₨ {total_price}
             </h3>
           </div>
           <div className="px-4 flex  justify-between py-4 bg-gray-100 w-full">
             <div className="flex items-center gap-5">
               {" "}
-              <MdNoMealsOuline className="border-2 rounded-full bg-gray-100" />
-              <div className="flex items-center gap-2">
+              <img
+                className="h-5 w-5 bg-gray-100 border-2 rounded-full"
+                src="https://cdn-icons-png.flaticon.com/512/3280/3280084.png"
+                alt=""
+              />
+              <div className="flex items-center gap-2 text-yellow-400">
                 {" "}
                 <FaShare />
                 Share
