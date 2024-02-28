@@ -6,7 +6,9 @@ import { createContextProvider } from "../Context/Context";
 export default function DatePickers() {
   const [startDate, setStartDate] = useState(new Date("2024-05-20"));
   const [returnDate, setReturnDate] = useState(null);
-  const {setDeparturePlaceholder, setReturnPlaceholder } = useContext(createContextProvider);
+  const { setDeparturePlaceholder, setReturnPlaceholder } = useContext(
+    createContextProvider
+  );
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -28,13 +30,13 @@ export default function DatePickers() {
   return (
     <div className="flex justify-between items-center gap-5">
       <DatePicker
-        className="border-2 h-12 p-3"
+        className="border-2 h-14 p-3"
         placeholderText={startDate ? formatDate(startDate) : "Departure"}
         selected={startDate}
         onChange={handleDepartureDateChange}
       />
       <DatePicker
-        className="border-2 h-12 p-3"
+        className="border-2 h-14 p-3"
         placeholderText={returnDate ? formatDate(returnDate) : "Return"}
         selected={returnDate}
         onChange={handleReturnDateChange}
