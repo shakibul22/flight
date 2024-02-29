@@ -46,31 +46,21 @@ const DataCard = ({ f }) => {
     destination_reach_timestamp,
   } = f;
 
-  const departureDepartureTime = new Date(filter.departure_departure_time);
-  const formattedDepartureTime = departureDepartureTime.toLocaleDateString(
-    "en-US",
-    {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }
-  );
-  const departureArriavlTime = new Date(filter.arrival_departure_time);
-  const formattedArrivalTime = departureArriavlTime.toLocaleDateString(
-    "en-US",
-    {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }
-  );
   const [open, setOpen] = React.useState(false);
+  const [opened, setOpened] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
+  };
+  const handleOpened = () => {
+    setOpened(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClosed = () => {
+    setOpened(false);
+  };
+
   return (
     <div>
       {/* {
@@ -82,12 +72,12 @@ const DataCard = ({ f }) => {
             {" "}
             <table className="table lg:w-[54vw] 2xl:w-[44vw] ">
               {/* head */}
-              <thead className="bg-[#ffffff] px-4 py-2 ">
+              <thead className="bg-[#f8f8f8] text-lg font-medium px-4 py-2 ">
                 <tr>
                   <th>Airline</th>
                   <th>Details</th>
-                  <th>Deparature</th>
-                  <th>Arrival</th>
+                  <th className="text-center">Deparature</th>
+                  <th className="text-center">Arrival</th>
                   <th>Duration</th>
                   <th className=" flex gap-1 items-center justify-center">
                     Baggage
@@ -124,64 +114,106 @@ const DataCard = ({ f }) => {
                   </td>
                   <td>
                     <div>
-                      <p>{baggage[0].origin}</p>
-                      <p> {formattedArrivalTime}</p>
-
-                      <div>
-                        {flight_group.map((flight, index) => (
-                          <div key={index}>
-                            <p>
-                              <span className="text-md ">
-                                Terminal- {flight.routes[0]?.origin_terminal}{" "}
-                              </span>
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <p>{baggage[0].destination} </p>
-
-                      <p>
-                        {baggage[0].destination_terminal}
-                        {formattedDepartureTime}
-                      </p>
                       {flight_group.map((flight, index) => (
                         <div key={index}>
-                          <p>
-                            <span className="text-md ">
-                              Terminal- {flight.routes[0]?.destination_terminal}{" "}
-                            </span>
-                          </p>
+                          {/* Parse arrival time and format */}
+                          {flight.routes[0]?.departure_time && (
+                            <div className="text-center">
+                              <h4 className="text-xl font-semibold">
+                                {flight.routes[0].origin}
+                              </h4>
+                              <p className="text-xs text-neutral">
+                                {new Date(
+                                  flight.routes[0].departure_time
+                                ).toLocaleDateString("en-US", {
+                                  weekday: "short",
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "2-digit",
+                                })}
+                              </p>
+                              <p className="text-xs text-neutral">
+                                {new Date(
+                                  flight.routes[0].departure_time
+                                ).toLocaleTimeString("en-US", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </p>
+                              <p className="text-[#b5b5b5] text-[10px]">
+                                Terminal {flight.routes[0]?.origin_terminal}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
                   </td>
+
+                  <td>
+                    <div>
+                      {flight_group.map((flight, index) => (
+                        <div key={index}>
+                          {/* Parse arrival time and format */}
+                          {flight.routes[0]?.arrival_time && (
+                            <div className="text-center">
+                              <h4 className="text-xl font-semibold">
+                                {flight.routes[0].destination}
+                              </h4>
+                              <p className="text-xs text-neutral">
+                                {new Date(
+                                  flight.routes[0].arrival_time
+                                ).toLocaleDateString("en-US", {
+                                  weekday: "short",
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "2-digit",
+                                })}
+                              </p>
+                              <p className="text-xs text-neutral">
+                                {new Date(
+                                  flight.routes[0].arrival_time
+                                ).toLocaleTimeString("en-US", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </p>
+                              <p className="text-[#b5b5b5] text-[10px]">
+                                Terminal{" "}
+                                {flight.routes[0]?.destination_terminal}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+
                   <td>
                     {flight_group.map((flight, index) => (
                       <div key={index}>
-                        <p> {flight.flight_time.substring(2)}</p>
+                        <p> {flight.routes[0].flight_time.substring(2)}</p>
                       </div>
                     ))}
                   </td>
 
-                  <td className=" flex gap-1 items-center justify-center">
-                    {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        {flight.routes[0].baggages?.checked?.ADT?.title}
-                      </div>
-                    ))}
-                    for{" "}
-                    {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        {
-                          flight.routes[0].baggages?.checked?.ADT
-                            ?.passenger_type
-                        }
-                      </div>
-                    ))}
+                  <td className="  text-center ">
+                    <div className="flex flex-row justify-center gap-1 items-center">
+                      {flight_group.map((flight, index) => (
+                        <div key={index}>
+                          {flight.routes[0].baggages?.checked?.ADT?.title}
+                        </div>
+                      ))}
+                      for{" "}
+                      {flight_group.map((flight, index) => (
+                        <div key={index}>
+                          {
+                            flight.routes[0].baggages?.checked?.ADT
+                              ?.passenger_type
+                          }
+                        </div>
+                      ))}
+                    </div>
                   </td>
                 </tr>
 
@@ -193,12 +225,9 @@ const DataCard = ({ f }) => {
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td>
-                            {flight_group.map((flight, index) => (
-                              <div key={index}>
-                                <p> {flight?.lay_over?.substring(2)}</p>
-                              </div>
-                            ))}
+                          <td className="text-xs  flex  gap-1 text-center">
+                            Transit Time:{" "}
+                            <p> {f.routes[1]?.lay_over.substring(5)}</p>
                           </td>
                           <td></td>
                           <td></td>
@@ -231,39 +260,77 @@ const DataCard = ({ f }) => {
                           </td>
                           <td>
                             <div>
-                              <p>{baggage[1]?.origin}</p>
-                              <p> {formattedArrivalTime}</p>
-
-                              <div>
-                                {flight_group?.map((flight, index) => (
-                                  <div key={index}>
-                                    <p>
-                                      <span className="text-md ">
-                                        Terminal-{" "}
-                                        {flight?.routes[1]?.origin_terminal}{" "}
-                                      </span>
-                                    </p>
-                                  </div>
-                                ))}
-                              </div>
+                              {flight_group.map((flight, index) => (
+                                <div key={index}>
+                                  {/* Parse arrival time and format */}
+                                  {flight.routes[1]?.departure_time && (
+                                    <div className="text-center">
+                                      <h4 className="text-xl font-semibold">
+                                        {flight.routes[1].origin}
+                                      </h4>
+                                      <p className="text-xs text-neutral">
+                                        {new Date(
+                                          flight.routes[1].departure_time
+                                        ).toLocaleDateString("en-US", {
+                                          weekday: "short",
+                                          year: "numeric",
+                                          month: "short",
+                                          day: "2-digit",
+                                        })}
+                                      </p>
+                                      <p className="text-xs text-neutral">
+                                        {new Date(
+                                          flight.routes[1].departure_time
+                                        ).toLocaleTimeString("en-US", {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}
+                                      </p>
+                                      <p className="text-[#b5b5b5] text-[10px]">
+                                        Terminal{" "}
+                                        {flight.routes[1]?.origin_terminal}
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
                             </div>
                           </td>
+
                           <td>
                             <div>
-                              <p>{baggage[1]?.destination} </p>
-
-                              <p>
-                                {baggage[1]?.destination_terminal}
-                                {formattedDepartureTime}
-                              </p>
-                              {flight_group?.map((flight, index) => (
+                              {flight_group.map((flight, index) => (
                                 <div key={index}>
-                                  <p>
-                                    <span className="text-md ">
-                                      Terminal-{" "}
-                                      {flight?.routes[1]?.destination_terminal}{" "}
-                                    </span>
-                                  </p>
+                                  {/* Parse arrival time and format */}
+                                  {flight.routes[1]?.arrival_time && (
+                                    <div className="text-center">
+                                      <h4 className="text-xl font-semibold">
+                                        {flight.routes[1].destination}
+                                      </h4>
+                                      <p className="text-xs text-neutral">
+                                        {new Date(
+                                          flight.routes[1].arrival_time
+                                        ).toLocaleDateString("en-US", {
+                                          weekday: "short",
+                                          year: "numeric",
+                                          month: "short",
+                                          day: "2-digit",
+                                        })}
+                                      </p>
+                                      <p className="text-xs text-neutral">
+                                        {new Date(
+                                          flight.routes[1].arrival_time
+                                        ).toLocaleTimeString("en-US", {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}
+                                      </p>
+                                      <p className="text-[#b5b5b5] text-[10px]">
+                                        Terminal{" "}
+                                        {flight.routes[1]?.destination_terminal}
+                                      </p>
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </div>
@@ -271,28 +338,33 @@ const DataCard = ({ f }) => {
                           <td>
                             {flight_group.map((flight, index) => (
                               <div key={index}>
-                                <p> {flight.flight_time.substring(2)}</p>
+                                <p>
+                                  {" "}
+                                  {flight.routes[1].flight_time.substring(2)}
+                                </p>
                               </div>
                             ))}
                           </td>
-                          <td className=" flex gap-1 items-center justify-center">
-                            {flight_group.map((flight, index) => (
-                              <div key={index}>
-                                {
-                                  flight.routes[1]?.baggages?.checked?.ADT
-                                    ?.title
-                                }
-                              </div>
-                            ))}
-                            for{" "}
-                            {flight_group.map((flight, index) => (
-                              <div key={index}>
-                                {
-                                  flight.routes[1]?.baggages?.checked?.ADT
-                                    ?.passenger_type
-                                }
-                              </div>
-                            ))}
+                          <td className="  text-center ">
+                            <div className="flex flex-row justify-center gap-1 items-center">
+                              {flight_group.map((flight, index) => (
+                                <div key={index}>
+                                  {
+                                    flight.routes[1].baggages?.checked?.ADT
+                                      ?.title
+                                  }
+                                </div>
+                              ))}
+                              for{" "}
+                              {flight_group.map((flight, index) => (
+                                <div key={index}>
+                                  {
+                                    flight.routes[1].baggages?.checked?.ADT
+                                      ?.passenger_type
+                                  }
+                                </div>
+                              ))}
+                            </div>
                           </td>
                         </tr>
                       </>
@@ -323,7 +395,7 @@ const DataCard = ({ f }) => {
                 Share
               </div>
             </div>
-            <div>
+            <div className="flex flex-row justify-evenly gap-2">
               <React.Fragment>
                 <Button onClick={handleOpen}>Flight Options</Button>
                 <Modal
@@ -379,7 +451,7 @@ const DataCard = ({ f }) => {
                             <div className="flex border-2 flex-row justify-between">
                               <div key={index} className=" flex p-2 flex-col">
                                 <span className="text-xl font-bold py-4 px-3">
-                                  Option {index + 1}
+                                  Option {index + 2}
                                 </span>
                                 <p className="px-3">
                                   Class of Service :
@@ -419,6 +491,66 @@ const DataCard = ({ f }) => {
                     <Button
                       className="transform translate-x-[620px]"
                       onClick={handleClose}
+                    >
+                      Close
+                    </Button>
+                  </Box>
+                </Modal>
+              </React.Fragment>
+              <React.Fragment>
+                <Button onClick={handleOpened}>Fare Summary</Button>
+                <Modal
+                  open={opened}
+                  onClose={handleClosed}
+                  aria-labelledby="child-modal-title"
+                  aria-describedby="child-modal-description"
+                >
+                  <Box sx={{ ...style, width: 700 }}>
+                    <h2
+                      id="child-modal-title"
+                      className="bg-[#3b0764] h-auto text-white p-3 text-xl"
+                    >
+                      Fare BreakDown
+                    </h2>
+                    <div id="child-modal-description">
+                      {flight_group.map((flight, index) => (
+                        <React.Fragment key={index}>
+                          <div className="overflow-x-auto">
+                            <table className="table table-xs">
+                              <thead>
+                                <tr>
+                                  <th className="border">Fare Summary</th>
+                                  <th className="border">Base fare</th>
+                                  <th className="border">Taxes + Fees</th>
+                                  <th className="border">Per passenger</th>
+                        
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {price_breakdown.map((breakdown, idx) => (
+            <tr key={idx}>
+              <td className="border">{breakdown.passenger_type}</td>
+              <td className="border">{breakdown.base_fare.amount}</td>
+              <td className="border">{breakdown.tax.amount}</td>
+              <td className="border">{breakdown.total.amount}</td>
+            </tr>
+          ))}
+          <tr>
+            <td>Total</td>
+            <td></td>
+            <td></td>
+            <td>{total_price}</td>
+          </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </React.Fragment>
+                      ))}
+                    </div>
+
+                    <Button
+                      className="transform translate-x-[620px]"
+                      onClick={handleClosed}
                     >
                       Close
                     </Button>
