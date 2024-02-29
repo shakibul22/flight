@@ -76,7 +76,7 @@ const DataCard = ({ f }) => {
       {/* {
         filter_data=="cheapest_flight"? <CheapestTab />:""
       } */}
-      <div className="card lg:card-side hover:border-[#e3b1b3] hover:border-2 mb-7 bg-[#ffffff] shadow-2xl">
+      <div className="card lg:card-side hover:border-[#e3b1b3] hover:border-2 mb-7 font-medium bg-[#ffffff] shadow-2xl">
         <div className="overflow-x-auto  flex flex-col justify-between  gap-2">
           <div className="flex flex-row justify-between  gap-2">
             {" "}
@@ -103,7 +103,7 @@ const DataCard = ({ f }) => {
                         {/* Displaying operating carrier logo */}
                         <img
                           className="w-10 h-10 rounded-full border-2"
-                          src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight.routes[0].operating.carrier_logo}`}
+                          src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight.routes[0].marketing.carrier}.png`}
                           alt="Operating Carrier Logo"
                         />
                       </div>
@@ -115,9 +115,9 @@ const DataCard = ({ f }) => {
                       <div key={flight.routes[0].air_segment_key}>
                         {" "}
                         <p>
-                          {flight.routes[0].operating.carrier}
+                          {flight.routes[0].marketing.carrier}
                           {" -"}
-                          {flight.routes[0].operating.flight_number}
+                          {flight.routes[0].marketing.flight_number}
                         </p>{" "}
                       </div>
                     ))}
@@ -185,114 +185,120 @@ const DataCard = ({ f }) => {
                   </td>
                 </tr>
 
-                <tr className="bg-[#f8e9ea] rounded-full px-2">
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    {flight_group.map((flightGroup, index) => (
+                {flight_group?.map((f, index) => (
+                  <React.Fragment key={index}>
+                    {f.routes[1] && (
+                      <>
+                        <tr className="bg-[#f8e9ea] rounded-full px-2">
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                          {flight_group.map((flight, index) => (
                       <div key={index}>
-                        {flightGroup.transit_time !== null ? (
-                          <p>Transit Time: {flightGroup.transit_time}</p>
-                        ) : (
-                          <p>Not available</p>
-                        )}
+                        <p> {flight?.lay_over?.substring(2)}</p>
                       </div>
                     ))}
-                  </td>
+                          </td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr className="">
+                          <th>
+                            {flight_group.map((flight) => (
+                              <div key={flight?.routes[1]?.air_segment_key}>
+                                {/* Displaying operating carrier logo */}
+                                <img
+                                  className="w-10 h-10 rounded-full border-2"
+                                  src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight?.routes[1]?.marketing?.carrier_logo}`}
+                                  alt="Operating Carrier Logo"
+                                />
+                              </div>
+                            ))}
+                          </th>
+                          <td>
+                            {" "}
+                            {flight_group?.map((flight) => (
+                              <div key={flight?.routes[1]?.air_segment_key}>
+                                {" "}
+                                <p>
+                                  {flight?.routes[1]?.marketing?.carrier}
+                                  {" -"}
+                                  {flight?.routes[1]?.marketing?.flight_number}
+                                </p>{" "}
+                              </div>
+                            ))}
+                          </td>
+                          <td>
+                            <div>
+                              <p>{baggage[1]?.origin}</p>
+                              <p> {formattedArrivalTime}</p>
 
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr className="">
-                  <th>
-                    {flight_group.map((flight) => (
-                      <div key={flight?.routes[1]?.air_segment_key}>
-                        {/* Displaying operating carrier logo */}
-                        <img
-                          className="w-10 h-10 rounded-full border-2"
-                          src={`https://gtrs-airlineimages.s3.ap-southeast-1.amazonaws.com/icon/${flight?.routes[0]?.marketing?.carrier_logo}`}
-                          alt="Operating Carrier Logo"
-                        />
-                      </div>
-                    ))}
-                  </th>
-                  <td>
-                    {" "}
-                    {flight_group?.map((flight) => (
-                      <div key={flight?.routes[1]?.air_segment_key}>
-                        {" "}
-                        <p>
-                          {flight?.routes[1]?.operating?.carrier}
-                          {" -"}
-                          {flight?.routes[1]?.operating?.flight_number}
-                        </p>{" "}
-                      </div>
-                    ))}
-                  </td>
-                  <td>
-                    <div>
-                      <p>{baggage[1]?.origin}</p>
-                      <p> {formattedArrivalTime}</p>
+                              <div>
+                                {flight_group?.map((flight, index) => (
+                                  <div key={index}>
+                                    <p>
+                                      <span className="text-md ">
+                                        Terminal-{" "}
+                                        {flight?.routes[1]?.origin_terminal}{" "}
+                                      </span>
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <p>{baggage[1]?.destination} </p>
 
-                      <div>
-                        {flight_group?.map((flight, index) => (
-                          <div key={index}>
-                            <p>
-                              <span className="text-md ">
-                                Terminal- {flight?.routes[1]?.origin_terminal}{" "}
-                              </span>
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <p>{baggage[1]?.destination} </p>
-
-                      <p>
-                        {baggage[1]?.destination_terminal}
-                        {formattedDepartureTime}
-                      </p>
-                      {flight_group?.map((flight, index) => (
-                        <div key={index}>
-                          <p>
-                            <span className="text-md ">
-                              Terminal-{" "}
-                              {flight?.routes[1]?.destination_terminal}{" "}
-                            </span>
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </td>
-                  <td>
-                    {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        <p> {flight.flight_time.substring(2)}</p>
-                      </div>
-                    ))}
-                  </td>
-
-                  <td className=" flex gap-1 items-center justify-center">
-                    {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        {flight.routes[1]?.baggages?.checked?.ADT?.title}
-                      </div>
-                    ))}
-                    for{" "}
-                    {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        {
-                          flight.routes[1]?.baggages?.checked?.ADT
-                            ?.passenger_type
-                        }
-                      </div>
-                    ))}
-                  </td>
-                </tr>
+                              <p>
+                                {baggage[1]?.destination_terminal}
+                                {formattedDepartureTime}
+                              </p>
+                              {flight_group?.map((flight, index) => (
+                                <div key={index}>
+                                  <p>
+                                    <span className="text-md ">
+                                      Terminal-{" "}
+                                      {flight?.routes[1]?.destination_terminal}{" "}
+                                    </span>
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                          <td>
+                            {flight_group.map((flight, index) => (
+                              <div key={index}>
+                                <p> {flight.flight_time.substring(2)}</p>
+                              </div>
+                            ))}
+                          </td>
+                          <td className=" flex gap-1 items-center justify-center">
+                            {flight_group.map((flight, index) => (
+                              <div key={index}>
+                                {
+                                  flight.routes[1]?.baggages?.checked?.ADT
+                                    ?.title
+                                }
+                              </div>
+                            ))}
+                            for{" "}
+                            {flight_group.map((flight, index) => (
+                              <div key={index}>
+                                {
+                                  flight.routes[1]?.baggages?.checked?.ADT
+                                    ?.passenger_type
+                                }
+                              </div>
+                            ))}
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                  </React.Fragment>
+                ))}
               </tbody>
             </table>
             <h3 className="flex flex-col justify-center gap-2 items-center p-5  ml-auto font-semibold text-center">
@@ -349,26 +355,30 @@ const DataCard = ({ f }) => {
                           >
                             Option {index + 1}
                           </Typography>
-                          {flight?.baggages && flight?.baggages?.carry_on && (
-                            <>
-                              <Typography
-                                variant="body1"
-                                id="transition-modal-description"
-                                gutterBottom
-                              >
-                                Baggage:{" "}
-                                {flight?.baggages?.carry_on?.ADT?.title}
-                              </Typography>
-                              <Typography
-                                variant="body1"
-                                id="transition-modal-description"
-                                gutterBottom
-                              >
-                                Hand Baggage:{" "}
-                                {flight.baggages.carry_on.ADT.pieceCount} pieces
-                              </Typography>
-                            </>
-                          )}
+
+                          <>
+                            <Typography
+                              variant="body1"
+                              id="transition-modal-description"
+                              gutterBottom
+                            >
+                              Baggage:{" "}
+                              {flight.routes[1]?.baggages?.carry_on?.ADT?.title}
+                            </Typography>
+                            <Typography
+                              variant="body1"
+                              id="transition-modal-description"
+                              gutterBottom
+                            >
+                              Hand Baggage:{" "}
+                              {
+                                flight?.routes[0]?.baggages.carry_on.ADT
+                                  .pieceCount
+                              }{" "}
+                              pieces
+                            </Typography>
+                          </>
+
                           {/* Add more flight details as needed */}
                         </div>
                       ))}
