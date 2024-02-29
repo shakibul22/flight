@@ -4,24 +4,20 @@ import BaggageComponent from "./BaggageComponent";
 import { FaShare } from "react-icons/fa6";
 import { MdNoMealsOuline } from "react-icons/md";
 
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { FaShoppingBag, FaShoppingBasket } from "react-icons/fa";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
-
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
 };
 
 const DataCard = ({ f }) => {
@@ -69,8 +65,12 @@ const DataCard = ({ f }) => {
     }
   );
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div>
       {/* {
@@ -194,11 +194,11 @@ const DataCard = ({ f }) => {
                           <td></td>
                           <td></td>
                           <td>
-                          {flight_group.map((flight, index) => (
-                      <div key={index}>
-                        <p> {flight?.lay_over?.substring(2)}</p>
-                      </div>
-                    ))}
+                            {flight_group.map((flight, index) => (
+                              <div key={index}>
+                                <p> {flight?.lay_over?.substring(2)}</p>
+                              </div>
+                            ))}
                           </td>
                           <td></td>
                           <td></td>
@@ -324,68 +324,107 @@ const DataCard = ({ f }) => {
               </div>
             </div>
             <div>
-              <div>
+              <React.Fragment>
                 <Button onClick={handleOpen}>Flight Options</Button>
                 <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
                   open={open}
                   onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
+                  aria-labelledby="child-modal-title"
+                  aria-describedby="child-modal-description"
                 >
-                  <Fade in={open}>
-                    <div style={style} className="bg-gray-100">
-                      <Typography
-                        variant="h5"
-                        id="transition-modal-title"
-                        gutterBottom
-                      >
-                        Flight Details
-                      </Typography>
+                  <Box sx={{ ...style, width: 700 }}>
+                    <h2
+                      id="child-modal-title"
+                      className="bg-[#3b0764] h-auto text-white p-3 text-xl"
+                    >
+                      Filght Options
+                    </h2>
+                    <div id="child-modal-description">
                       {flight_group.map((flight, index) => (
-                        <div key={index}>
-                          <Typography
-                            variant="subtitle1"
-                            id="transition-modal-description"
-                            gutterBottom
-                          >
-                            Option {index + 1}
-                          </Typography>
-
-                          <>
-                            <Typography
-                              variant="body1"
-                              id="transition-modal-description"
-                              gutterBottom
-                            >
-                              Baggage:{" "}
-                              {flight.routes[1]?.baggages?.carry_on?.ADT?.title}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              id="transition-modal-description"
-                              gutterBottom
-                            >
-                              Hand Baggage:{" "}
-                              {
-                                flight?.routes[0]?.baggages.carry_on.ADT
-                                  .pieceCount
-                              }{" "}
-                              pieces
-                            </Typography>
-                          </>
-
-                          {/* Add more flight details as needed */}
-                        </div>
+                        <React.Fragment key={index}>
+                          <div className="flex border-2 flex row justify-between font-semibold">
+                            <div className=" flex p-2 flex-col">
+                              <span className="text-xl font-bold py-4 px-3">
+                                Option {index + 1}
+                              </span>
+                              <p className="px-3 text-xs ">
+                                Class of Service:
+                                {flight.routes[0]?.booking_class?.cabin_class}
+                              </p>
+                              <p className="px-3 flex items-center gap-2 text-rose-600">
+                                <FaShoppingBag /> Baggage:{" "}
+                                {
+                                  flight.routes[0]?.baggages?.checked?.ADT
+                                    ?.title
+                                }
+                              </p>
+                              <p className="px-3 flex items-center gap-2 text-blue-300">
+                                <FaShoppingBasket /> Hand Baggage:{" "}
+                                {
+                                  flight?.routes[0]?.baggages.checked.ADT
+                                    .pieceCount
+                                }{" "}
+                                pieces
+                              </p>
+                            </div>
+                            <div className="flex flex-col justify-center gap-2 items-center p-5  ml-auto font-semibold text-center">
+                              ₨ {total_price}
+                              <span className="text-sm">{filter.refund}</span>
+                              <button className="btn py-3 px-6 text-rose-700 border-rose-700">
+                                Select
+                              </button>
+                            </div>
+                          </div>
+                          {flight?.routes[1] && (
+                            <div className="flex border-2 flex-row justify-between">
+                              <div key={index} className=" flex p-2 flex-col">
+                                <span className="text-xl font-bold py-4 px-3">
+                                  Option {index + 1}
+                                </span>
+                                <p className="px-3">
+                                  Class of Service :
+                                  {flight.routes[1]?.booking_class?.cabin_class}
+                                </p>
+                                <p className="px-3 flex items-center gap-2 text-rose-600">
+                                  <FaShoppingBag />
+                                  Baggage:
+                                  {
+                                    flight.routes[1]?.baggages?.checked?.ADT
+                                      ?.title
+                                  }
+                                </p>
+                                <p className="px-3 flex items-center gap-2 text-blue-300">
+                                  <FaShoppingBasket />
+                                  Hand Baggage:{" "}
+                                  {
+                                    flight?.routes[1]?.baggages.checked.ADT
+                                      .pieceCount
+                                  }{" "}
+                                  pieces
+                                </p>
+                              </div>
+                              <div className="flex flex-col justify-center gap-2 items-center p-5  ml-auto font-semibold text-center">
+                                ₨ {total_price}
+                                <span className="text-sm">{filter.refund}</span>
+                                <button className="btn py-3 px-6 text-rose-700 border-rose-700">
+                                  Select
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </React.Fragment>
                       ))}
                     </div>
-                  </Fade>
+
+                    <Button
+                      className="transform translate-x-[620px]"
+                      onClick={handleClose}
+                    >
+                      Close
+                    </Button>
+                  </Box>
                 </Modal>
-              </div>
+              </React.Fragment>
             </div>
           </div>
         </div>
@@ -395,3 +434,17 @@ const DataCard = ({ f }) => {
 };
 
 export default DataCard;
+{
+  /*<div style={style} className="bg-white min-w-2xl  ">
+  <div className="bg-[#3b0764] h-10 w-full text-white p-2 text-xl">
+    {" "}
+    Flight Options
+  </div>
+
+  {flight_group.map((flight, index) => (
+    <div key={index}>
+      <span className="text-xl font-bold py-4 px-3"> Option {index + 1}</span>
+      Baggage: {flight.routes[1]?.baggages?.checked?.ADT?.title}
+      Hand Baggage: {flight?.routes[0]?.baggages.checked.ADT.pieceCount} pieces
+      {/* Add more flight details as needed */
+}
